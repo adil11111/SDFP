@@ -9,7 +9,7 @@ API_KEY = api_dict['nomics']
 
 #everything works as intended, unless otherwise commented!
 
-def names():
+def coins():
     url = API_LINK + 'currencies?key=' + API_KEY
     response = urllib.request.urlopen(url)
     return json.loads(response.read())
@@ -24,10 +24,14 @@ def prices_sparkline(start, end):
     response = urllib.request.urlopen(url)
     return json.loads(response.read())
 
-
+def list_coins():
+    list_of_coins = []
+    raw = coins()
+    for dict in raw:
+        list_of_coins.append(dict['id'])
+    return list_of_coins
 
 #testing functions
-print(names())
 #print(prices())
+print(list_coins())
 #print(prices_sparkline("2018-12-01", "2018-12-31"))
-
