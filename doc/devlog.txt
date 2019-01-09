@@ -5,8 +5,8 @@ Rubin Peci
 Qian Zhou
 pd 07
 ---------------------
-<Project>
-
+Project Description:
+We are creating a cryptocurrency forum that allows users to have meaningful discussion about all kinds of important topics in the crypto world.
  ______   ______   __   __   __       ______   _______     
 /_____/\ /_____/\ /_/\ /_/\ /_/\     /_____/\ /______/\    
 \:::_ \ \\::::_\/_\:\ \\ \ \\:\ \    \:::_ \ \\::::__\/__  
@@ -17,7 +17,22 @@ pd 07
 ==============================================================
 ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
- topherM -- <date> <time>
+ qianZ -- 2019-01-07 18:30
 --------------------------------------------------------------
-- <what you did>
+- Created devlog
+==============================================================
+
+ adilG -- 2019-01-08 22:00
+--------------------------------------------------------------
+- As a group modifed the design doc:
+
+Adil: Updated site map to clarify forum pages as well as landing page
+Rubin: Added a thread table in database schema to keep track of threads for all users.
+Qian: Added information about JavaScript and Foundation.
+Amit: Updated component map to promote readability and clarify confusion about app.py file.
+==============================================================
+ 
+ adilG -- 2019-01-09 1:17
+--------------------------------------------------------------
+- Added project description
 ==============================================================
