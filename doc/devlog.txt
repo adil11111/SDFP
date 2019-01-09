@@ -6,7 +6,7 @@ Qian Zhou
 pd 07
 ---------------------
 Project Description:
-We are creating a cryptocurrency forum that allows users to have meaningful discussion about all kinds of important topics in the crypto world.
+We are creating a cryptocurrency forum that allows users to have meaningful discussion about important topics in the crypto world.
  ______   ______   __   __   __       ______   _______     
 /_____/\ /_____/\ /_/\ /_/\ /_/\     /_____/\ /______/\    
 \:::_ \ \\::::_\/_\:\ \\ \ \\:\ \    \:::_ \ \\::::__\/__  
