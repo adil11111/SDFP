@@ -5,8 +5,11 @@ Rubin Peci
 Qian Zhou
 pd 07
 ---------------------
+The End
 Project Description:
 We are creating a cryptocurrency forum that allows users to have meaningful discussion about important topics in the crypto world.
+
+
  ______   ______   __   __   __       ______   _______     
 /_____/\ /_____/\ /_/\ /_/\ /_/\     /_____/\ /______/\    
 \:::_ \ \\::::_\/_\:\ \\ \ \\:\ \    \:::_ \ \\::::__\/__  
@@ -15,12 +18,20 @@ We are creating a cryptocurrency forum that allows users to have meaningful disc
    \:\/.:| |\:\____/\\ ..::/ / \:\/___/\\:\_\ \ \\:\_\ \ \ 
     \____/_/ \_____\/ \___/_(   \_____\/ \_____\/ \_____\/ 
 ==============================================================
-||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+CHANGES TO DESIGN AND PROJECT
+- Clarify changes to the component map
+	- Specify how app.py will import the .py files inside the util/ folder
+	- Fix arrows and make other relationships cleare
+- Changed database schema
+	- Added a new table - username_threads, which keeps track of all the threads a person makes
+	- Refactored the other table - username_posts, which keeps track of all the posts a person makes
+- Mention how we will use Foundation for CSS and JavaScript for some backend work
+===========================================
 
  qianZ -- 2019-01-07 18:30
 --------------------------------------------------------------
 - Created devlog
-==============================================================
 
  adilG -- 2019-01-08 22:00
 --------------------------------------------------------------
@@ -30,9 +41,15 @@ Adil: Updated site map to clarify forum pages as well as landing page
 Rubin: Added a thread table in database schema to keep track of threads for all users.
 Qian: Added information about JavaScript and Foundation.
 Amit: Updated component map to promote readability and clarify confusion about app.py file.
-==============================================================
  
  adilG -- 2019-01-09 1:17
 --------------------------------------------------------------
 - Added project description
-==============================================================
+
+narangA -- 2019-01-09 10:50
+--------------------------------------------------------------
+- Update design doc
+
+peciR -- 2018-01-09 10:50
+--------------------------------------------------------------
+- Update devlog to reflect changes on design doc
