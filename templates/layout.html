@@ -1,16 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" >
   <head>
+
+    <!-- foundation -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title>
       CryptUwU |
       {% block title %}
       {% endblock %}
     </title>
 
-    <!-- foundation -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    
     <!--<link rel="stylesheet" href="css/app.css">    <!-- for custom css -->
     <!--<link rel="stylesheet" href="js/app.css">    <!-- for custom js -->
     
@@ -26,10 +28,12 @@
         
     {% endblock %}
 
-    <div id="footer">
+    <div id="footer" class="grid-x">
+      <div class="cell footer">
       {% block footer %}
-      &copy; Copyright 2018 by Nahasapeemapetilon
+      <h6 class="text-right" &copy; Copyright 2018 by Nahasapeemapetilon</h6>
       {% endblock %}
+      </div>
     </div>
   </body>
 </html>
