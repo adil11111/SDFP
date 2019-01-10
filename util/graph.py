@@ -1,24 +1,18 @@
 #test file to practice producing graphs :3
-import plotly
 import plotly.plotly as py
 import plotly.graph_objs as go
-
+import plotly.tools as tls
 import pandas as pd
-from datetime import datetime
 
-plotly.tools.set_credentials_file(username='LargeLlama', api_key='G0HLF2ZpL7aBZdjGXKap')
+df = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv')
 
-import plotly.plotly as py
-import plotly.graph_objs as go
-
-trace0 = go.Scatter(
-    x=[1, 2, 3, 4],
-    y=[10, 15, 13, 17]
-)
-trace1 = go.Scatter(
-    x=[1, 2, 3, 4],
-    y=[16, 5, 11, 9]
-)
-data = [trace0, trace1]
-
-py.plot(data, filename = 'basic-line', auto_open=True)
+trace = go.Ohlc(x=df['Date'],
+                open=df['AAPL.Open'],
+                high=df['AAPL.High'],
+                low=df['AAPL.Low'],
+                close=df['AAPL.Close'])
+data = [trace]
+url = py.iplot(data, filename='simple_candlestick')
+print(url.resource)
+html = tls.get_embed(url.resource)
+print(html)
