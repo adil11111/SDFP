@@ -13,7 +13,7 @@ app.secret_key = os.urandom(32)
 @app.route("/")
 def root():
     
-    return render_template('home.html')
+    return render_template('home.html', notLoggedIn=True)
 
 @app.route("/auth", methods=["POST"])
 def authentication():
