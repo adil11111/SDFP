@@ -6,7 +6,7 @@ import plotly.graph_objs as go
 import pandas as pd
 from datetime import datetime
 
-plotly.tools.set_credentials_file(username='LargeLlama', api_key='7M8XElKRCDpK77rzPKyZ')
+plotly.tools.set_credentials_file(username='LargeLlama', api_key='G0HLF2ZpL7aBZdjGXKap')
 
 import plotly.plotly as py
 import plotly.graph_objs as go
