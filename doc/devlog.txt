@@ -57,3 +57,8 @@ peciR -- 2018-01-09 10:50
 qianZ -- 2019-01-09 23:28
 --------------------------------------------------------------
 - Start working on templating
+
+peciR -- 2018-01-09 13:10
+--------------------------------------------------------------
+- Modify methods in crypto.py to take optional parameters
+- Add candlestick methods in crypto.py 
