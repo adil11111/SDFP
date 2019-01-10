@@ -7,8 +7,6 @@ with open('../data/keys.json', 'r') as data:
 
 API_KEY = api_dict['nomics']
 
-#everything works as intended, unless otherwise commented!
-
 def coins():
     '''Returns a dictionary of all the currencies available on Nomics'''
     url = API_LINK + 'currencies?key=' + API_KEY
