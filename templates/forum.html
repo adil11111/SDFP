@@ -1,9 +1,29 @@
-{% extends "layout.html" %}
+{% extends "home.html" %}
 
 {% block title %} Forum {% endblock %}
 
 {% block content %}
+<h2 class="text-center"> {{topic}} Forum </h2>
+<div class="grid-container">
+<table class="hover">
+  <thead><tr>
+      <th> Post </th><th> user </th>
+  </tr></thead>
+  <tbody>
+    
+    <!-- threads=[[post, id, user],[etc]]-->
+    {% for thread in threads %}
+    <tr>
+      <td><a href="/thread?id="+{{thread[1]}}>{{ thread[0] }}</td>
+      <td>{{thread[2]}}</td>
+    </tr>
 
-Forum stuff
+    {% endfor %}
+    
+  </tbody>
+  
+</table>
+</div>
+
 {% endblock %}
 
