@@ -3,9 +3,9 @@
   <head>
 
     <!-- foundation -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
       CryptUwU |
       {% block title %}
@@ -16,10 +16,12 @@
     <!--<link rel="stylesheet" href="css/app.css">    <!-- for custom css -->
     <!--<link rel="stylesheet" href="js/app.css">    <!-- for custom js -->
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.0.1/css/foundation.css"> 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.0.1/js/foundation.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.0.1/js/vendor/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.0.1/css/foundation.css">
 
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.5.0/js/foundation.min.js"></script>
     
     
   </head>
@@ -28,12 +30,19 @@
         
     {% endblock %}
 
-    <div id="footer" class="grid-x">
-      <div class="cell footer">
+    <br><hr>
+    <div id="footer" class="grid-container">
+      <div class="grid-x grid-padding-x">
+	
       {% block footer %}
-      <h6 class="text-right" &copy; Copyright 2018 by Nahasapeemapetilon</h6>
+      <h6 class="text-center"> &copy; Copyright 2018 by Nahasapeemapetilon</h6>
       {% endblock %}
       </div>
     </div>
+
+        <script>
+      $(document).foundation();
+    </script>
+    
   </body>
 </html>
