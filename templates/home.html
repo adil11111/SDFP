@@ -2,12 +2,12 @@
 
 {% block title %} Landing {% endblock %}
 
-{% block content %}
+{% block pageTop %}
 
 
 <div class="top-bar">
   <div class="top-bar-left"><ul class="menu">
-      <li><a href="#">Home</a></li>
+      <li><a href="/">Home</a></li>
       <li><a href="/chart"> Charts</a></li>
   </ul></div>
   <!-- login; could potentially javascriptize???-->
@@ -28,15 +28,20 @@
 	  </form>
 	</div>
       </li>
-      {% endif %}
-      
       <li><a href="/register_page"> Sign Up</a></li>
+      {% else %}
+      <li> <a href="/profile"> Profile</a></li>
+      {% endif %}
   </ul></div>
 </div>
 
 <h1 class="text-center"> CryptoUwU </h1>
 
 
+{% endblock %}
+
+{% block content %}
+Landing stuff
 {% endblock %}
 
 
