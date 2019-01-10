@@ -4,6 +4,7 @@ import plotly.graph_objs as go
 import plotly.tools as tls
 import pandas as pd
 
+
 df = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv')
 
 trace = go.Ohlc(x=df['Date'],
