@@ -1,12 +1,21 @@
 #test file to practice producing graphs :3
+import plotly
 import plotly.plotly as py
 import plotly.graph_objs as go
 import plotly.tools as tls
 import pandas as pd
-import crypto
+import crypto, json
 
 #BUG - 2018/12/16 IS MESSED UP ON NOMICS FOR BTCETH EXCHANGE ON BINANCE - NOT SURE WHY?
 #avoid that date lmao
+
+#api key stuff
+with open('../data/keys.json', 'r') as data:
+    api_dict = json.load(data)
+
+API_KEY = api_dict['plotly']
+USERNAME = api_dict['plotly username']
+plotly.tools.set_credentials_file(username=USERNAME, api_key=API_KEY)
 
 '''
 Parameters:
@@ -38,5 +47,5 @@ def gen_candlestick(data, market):
 
 #Debuggin print statements
 #print(gen_candlestick(crypto.candlestick_csv_url('1d', 'BTC', '2018-11-01' , '2018-12-01'), "BTC 2018-11-01 to 2018-12-01"))
-#print(gen_candlestick(crypto.candlestick_csv_url('1m', 'ETH', '2018-03-30', '2018-06-01'), 'BTC 2018-04-01 to 2018-06-01'))
+print(gen_candlestick(crypto.candlestick_csv_url('1m', 'ETH', '2018-03-30', '2018-06-01'), 'BTC 2018-04-01 to 2018-06-01'))
 
