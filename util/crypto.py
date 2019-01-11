@@ -64,23 +64,37 @@ def exchange_candles(interval, exchange, market, start = None, end = None):
         return json.loads(response.read())
 
 def exchange_candles_csv(interval, exchange, market, start = None, end = None):
-    '''Returns candlestick data related ot exchange rates'''
-    if start == None and end == None:
+      '''Returns candlestick data related ot exchange rates'''
+      if start == None and end == None:
         url = API_LINK + 'candles?key=' + API_KEY + '&interval=' + interval + '&exchange=' + exchange + '&market=' + market + "&format=csv"
-        response = urllib.request.urlopen(url).read()
-        return response 
-    elif start == None:
+        response = urllib.request.urlopen(url).read().decode("utf8")
+        return response
+      elif start == None:
         url = API_LINK + 'candles?key=' + API_KEY + '&interval=' + interval + '&exchange=' + exchange + '&market=' + market + '&end=' + end + 'T00%3A00%3A00Z' + "&format=csv"
         response = urllib.request.urlopen(url).read().decode("utf8")
         return response
-    elif end == None:
+      elif end == None:
         url = API_LINK + 'candles?key=' + API_KEY + '&interval=' + interval + '&exchange=' + exchange + '&market=' + market + '&start=' + start + 'T00%3A00%3A00Z' + "&format=csv"
         response = urllib.request.urlopen(url).read().decode("utf8")
         return response
-    else:
+      else:
         url = API_LINK + 'candles?key=' + API_KEY + '&interval=' + interval + '&exchange=' + exchange + '&market=' + market + '&start=' + start + 'T00%3A00%3A00Z' + '&end=' + end + 'T00%3A00%3A00Z' + "&format=csv"
         response = urllib.request.urlopen(url).read().decode("utf8")
         return response
+
+def exchange_candles_csv_url(interval, exchange, market, start = None, end = None):
+    if start == None and end == None:
+        url = API_LINK + 'candles?key=' + API_KEY + '&interval=' + interval + '&exchange=' + exchange + '&market=' + market + "&format=csv"
+        return url 
+    elif start == None:
+        url = API_LINK + 'candles?key=' + API_KEY + '&interval=' + interval + '&exchange=' + exchange + '&market=' + market + '&end=' + end + 'T00%3A00%3A00Z' + "&format=csv"
+        return url 
+    elif end == None:
+        url = API_LINK + 'candles?key=' + API_KEY + '&interval=' + interval + '&exchange=' + exchange + '&market=' + market + '&start=' + start + 'T00%3A00%3A00Z' + "&format=csv"
+        return url
+    else:
+        url = API_LINK + 'candles?key=' + API_KEY + '&interval=' + interval + '&exchange=' + exchange + '&market=' + market + '&start=' + start + 'T00%3A00%3A00Z' + '&end=' + end + 'T00%3A00%3A00Z' + "&format=csv"
+        return url
 
 def list_coins():
     '''Returns a list of coins available on the Nomics API'''
@@ -101,4 +115,4 @@ def list_coins():
 #print(exchange_candles('1m', 'binance', 'BTCETH', "2018-12-01"))
 #print(exchange_candles('1m', 'binance', 'BTCETH', None, '2018-12-30'))
 #print(exchange_candles('1m', 'binance', 'BTCETH', '2018-12-01' , '2018-12-30'))
-print(exchange_candles_csv('1m', 'binance', 'BTCETH', '2018-12-01' , '2018-12-30'))
+#print(exchange_candles_csv('1m', 'binance', 'BTCETH', '2018-12-01' , '2018-12-30'))
