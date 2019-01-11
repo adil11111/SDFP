@@ -40,7 +40,7 @@ def gen_candlestick(data, market):
                     low=df['low'],
                     close=df['close'])
     data = [trace]
-    url = py.plot(data, filename=market)
+    url = py.plot(data, filename=market, auto_open=False)
     #print(url.resource)
     html = tls.get_embed(url)
     return html
