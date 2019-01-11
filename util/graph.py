@@ -5,7 +5,9 @@ import plotly.tools as tls
 import pandas as pd
 import crypto
 
-#BUG - doesn't print out the candlestick as expected... why?
+#BUG - 2018/12/16 IS MESSED UP ON NOMICS FOR BTCETH EXCHANGE ON BINANCE - NOT SURE WHY?
+#avoid that date lmao
+
 def gen_candlestick(data, market):
     new_header = ['timestamp', 'low', 'open', 'close', 'high', 'volume', 'num_trades']
     df = pd.read_csv(data)
@@ -25,4 +27,6 @@ def gen_candlestick(data, market):
     html = tls.get_embed(url.resource)
     return html
 
-print(gen_candlestick(crypto.exchange_candles_csv_url('1d', 'binance', 'BTCETH', '2018-12-01' , '2018-12-30'), "BTCETH"))
+#print(gen_candlestick(crypto.candlestick_csv_url('1d', 'BTC', '2018-11-01' , '2018-12-01'), "BTC 2018-11-01 to 2018-12-01"))
+#print(gen_candlestick(crypto.candlestick_csv_url('1m', 'ETH', '2018-03-30', '2018-06-01'), 'BTC 2018-04-01 to 2018-06-01'))
+
