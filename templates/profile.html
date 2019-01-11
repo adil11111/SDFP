@@ -4,4 +4,55 @@
 
 {% block content %}
 <h1 class="text-center"> CryptoUwU: Your Profile</h1>
+
+<div class="grid-container">
+  <div class="grid-x grid-padding-x">
+    <div class="cell small-6">
+      
+      <table class="hover">
+	<thead><tr>
+	    <th> Your Threads </th>
+	</tr></thead>
+	<tbody>
+	  
+	  <!-- threads=[[post, id],[etc]]-->
+	  {% for thread in threads %}
+	  <tr>
+	    <td><a href="/thread?id="+{{thread[1]}}>{{ thread[0] }}</a></td>
+	    
+	  </tr>
+
+	  {% endfor %}
+	  
+	</tbody>
+	
+      </table>
+    </div>
+ 
+
+  <!-- something here?-->
+  
+  <div  class="cell small-3">
+    <table class="hover">
+      <thead><tr>
+	  <th> Saved Coins </th>
+      </tr></thead>
+      <tbody>
+	
+	<!-- coins=[coin1, coin2, etc]-->
+	{% for coin in coins %}
+	<tr>
+	  <td>{{ coin }}</td>
+	</tr>
+
+	{% endfor %}
+	
+      </tbody>
+      
+    </table>
+  </div>
+</div>
+
+
+
 {% endblock %}

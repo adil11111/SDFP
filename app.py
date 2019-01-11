@@ -45,7 +45,7 @@ def register_auth():
 def load_profile():
     return render_template('profile.html')
 
-"""thread and forum """
+"""forum """
 @app.route("/forum")
 def load_forum():
     topic = request.args.get('topics')
@@ -60,6 +60,8 @@ def makeThread():
     #some function to create thread;
     return render_template('forum.html', notLoggedIn=noUser,topic=topic)
 
+
+"""thread"""
 @app.route("/thread", methods=['POST','GET'])
 def load_thread():
     if request.method=="GET":
