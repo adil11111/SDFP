@@ -5,6 +5,7 @@ import plotly.tools as tls
 import pandas as pd
 import crypto
 
+#BUG - doesn't print out the candlestick as expected... why?
 def gen_candlestick(data, market):
     new_header = ['timestamp', 'low', 'open', 'close', 'high', 'volume', 'num_trades']
     df = pd.read_csv(data)

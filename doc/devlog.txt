@@ -18,6 +18,9 @@ We are creating a cryptocurrency forum that allows users to have meaningful disc
    \:\/.:| |\:\____/\\ ..::/ / \:\/___/\\:\_\ \ \\:\_\ \ \ 
     \____/_/ \_____\/ \___/_(   \_____\/ \_____\/ \_____\/ 
 ==============================================================
+BUGS
+- graph.py (2019/01/10)
+	- Candlestick graph using plotly doesn't showup properly
 
 CHANGES TO DESIGN AND PROJECT
 - Clarify changes to the component map
@@ -62,3 +65,9 @@ peciR -- 2018-01-09 13:10
 --------------------------------------------------------------
 - Modify methods in crypto.py to take optional parameters
 - Add candlestick methods in crypto.py 
+
+peciR -- 2018-01-10 20:50
+--------------------------------------------------------------
+- Add graph.py to create relevant charts
+	- Bug with displaying the data - chart looks messed up, must fix
+- Modify candlestick methods in crypto.py to work with graph.py
