@@ -115,4 +115,4 @@ def list_coins():
 #print(exchange_candles('1m', 'binance', 'BTCETH', "2018-12-01"))
 #print(exchange_candles('1m', 'binance', 'BTCETH', None, '2018-12-30'))
 #print(exchange_candles('1m', 'binance', 'BTCETH', '2018-12-01' , '2018-12-30'))
-#print(exchange_candles_csv('1m', 'binance', 'BTCETH', '2018-12-01' , '2018-12-30'))
+print(exchange_candles_csv('1m', 'binance', 'BTCETH', '2018-12-01' , '2018-12-30'))

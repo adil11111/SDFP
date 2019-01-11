@@ -11,6 +11,9 @@ def gen_candlestick(data, market):
     df = pd.read_csv(data)
     df.columns = new_header
     print(df)
+    print(df.columns)
+    print(df.index)
+
     trace = go.Ohlc(x=df['timestamp'],
                     open=df['open'],
                     high=df['high'],
@@ -18,8 +21,8 @@ def gen_candlestick(data, market):
                     close=df['close'])
     data = [trace]
     url = py.iplot(data, filename=market)
-    print(url.resource)
+    #print(url.resource)
     html = tls.get_embed(url.resource)
     return html
 
-#print(gen_candlestick(crypto.exchange_candles_csv_url('1m', 'binance', 'BTCETH', '2018-12-01' , '2018-12-30'), "BTCETH"))
+print(gen_candlestick(crypto.exchange_candles_csv_url('1d', 'binance', 'BTCETH', '2018-12-01' , '2018-12-30'), "BTCETH"))
