@@ -19,8 +19,13 @@ We are creating a cryptocurrency forum that allows users to have meaningful disc
     \____/_/ \_____\/ \___/_(   \_____\/ \_____\/ \_____\/ 
 ==============================================================
 BUGS
+
+*RESOLVED ON 2019/01/11*
 - graph.py (2019/01/10)
 	- Candlestick graph using plotly doesn't showup properly
+- Turns out there is on specific date on a specific data range that is messed up on the Nomics API, not our fault
+- More details in graph.py
+
 
 CHANGES TO DESIGN AND PROJECT
 - Clarify changes to the component map
@@ -75,3 +80,10 @@ peciR -- 2018-01-10 20:50
 qianZ -- 2019-01-11 01:11
 --------------------------------------------------------------
 - created templates; started foundation for layout
+
+peciR -- 2018-01-11 11:24
+--------------------------------------------------------------
+- fix bugs in the graph.py
+- add methods in the crypto.py to get more csv data to test with graph.py
+- graph.py creates the graph as expected, and the iFrame it generates is also functional as an HTML snippet :3
+- Comment methods in crypto.py and graph.py

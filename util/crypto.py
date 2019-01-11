@@ -26,7 +26,7 @@ def prices_sparkline(start, end):
     return json.loads(response.read())
 
 def candlestick(interval, currency, start = None, end = None):
-    '''Returns candlestick data regarding a certain currency, priced in USD '''
+    '''Returns candlestick data regarding a certain currency, priced in USD, in JSON format '''
     if start == None and end == None:
         url = API_LINK + 'candles?key=' + API_KEY + '&interval=' + interval + '&currency=' + currency
         response = urllib.request.urlopen(url)
@@ -44,8 +44,8 @@ def candlestick(interval, currency, start = None, end = None):
         response = urllib.request.urlopen(url)
         return json.loads(response.read())
 
-def candlestick_csv_url(interval, currency, start = None, end = None):
-    '''Returns candlestick data regarding a certain currency, priced in USD '''
+def candlestick_csv(interval, currency, start = None, end = None):
+    '''Returns candlestick data regarding a certain currency, priced in USD, in CSV format '''
     if start == None and end == None:
         url = API_LINK + 'candles?key=' + API_KEY + '&interval=' + interval + '&currency=' + currency + "&format=csv"
         response = urllib.request.urlopen(url).read().decode("utf8")
@@ -64,7 +64,7 @@ def candlestick_csv_url(interval, currency, start = None, end = None):
         return response 
 
 def candlestick_csv_url(interval, currency, start = None, end = None):
-    '''Returns candlestick data regarding a certain currency, priced in USD '''
+    '''Returns a url pointing to a csv file that has candlestick data regarding a certain currency, priced in USD'''
     if start == None and end == None:
         url = API_LINK + 'candles?key=' + API_KEY + '&interval=' + interval + '&currency=' + currency + "&format=csv"
         return url
@@ -79,7 +79,7 @@ def candlestick_csv_url(interval, currency, start = None, end = None):
         return url
 
 def exchange_candles(interval, exchange, market, start = None, end = None):
-    '''Returns candlestick data related ot exchange rates'''
+    '''Returns candlestick data related to exchange rates in JSON format'''
     if start == None and end == None:
         url = API_LINK + 'candles?key=' + API_KEY + '&interval=' + interval + '&exchange=' + exchange + '&market=' + market
         response = urllib.request.urlopen(url)
@@ -98,7 +98,7 @@ def exchange_candles(interval, exchange, market, start = None, end = None):
         return json.loads(response.read())
 
 def exchange_candles_csv(interval, exchange, market, start = None, end = None):
-      '''Returns candlestick data related ot exchange rates'''
+      '''Returns candlestick data related to exchange rates in CSV format'''
       if start == None and end == None:
         url = API_LINK + 'candles?key=' + API_KEY + '&interval=' + interval + '&exchange=' + exchange + '&market=' + market + "&format=csv"
         response = urllib.request.urlopen(url).read().decode("utf8")
@@ -117,6 +117,7 @@ def exchange_candles_csv(interval, exchange, market, start = None, end = None):
         return response
 
 def exchange_candles_csv_url(interval, exchange, market, start = None, end = None):
+    '''Returns a url pointing to a CSV file with candlestick atat related to exchange rates'''
     if start == None and end == None:
         url = API_LINK + 'candles?key=' + API_KEY + '&interval=' + interval + '&exchange=' + exchange + '&market=' + market + "&format=csv"
         return url 
@@ -149,4 +150,4 @@ def list_coins():
 #print(exchange_candles('1m', 'binance', 'BTCETH', "2018-12-01"))
 #print(exchange_candles('1m', 'binance', 'BTCETH', None, '2018-12-30'))
 #print(exchange_candles('1m', 'binance', 'BTCETH', '2018-12-01' , '2018-12-30'))
-print(exchange_candles_csv('1m', 'binance', 'BTCETH', '2018-12-01' , '2018-12-30'))
+#print(exchange_candles_csv('1m', 'binance', 'BTCETH', '2018-12-01' , '2018-12-30'))
