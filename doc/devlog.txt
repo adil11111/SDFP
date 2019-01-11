@@ -71,3 +71,7 @@ peciR -- 2018-01-10 20:50
 - Add graph.py to create relevant charts
 	- Bug with displaying the data - chart looks messed up, must fix
 - Modify candlestick methods in crypto.py to work with graph.py
+
+qianZ -- 2019-01-11 01:11
+--------------------------------------------------------------
+- created templates; started foundation for layout
