@@ -17,13 +17,15 @@
     {% for post in posts %}
     <tr>
       <td>{{post[0]}}</td><td>{{post[1]}}</td>
-      <td>{{post[2]}}</td><td>{{post[3]}}</td>
+      <td>{{post[2]}}</td><td>{{post[4]}}</td>
       <td>
 	<button class="button" data-open="addPost"> Comment</button>
 	<div class="reveal " data-toggle="addPost" id="addPost" data-reveal data-open data-close-on-click=false>
 	  <p class="lead"> Please enter desired content</p>
 	  <form action="/addPost" method="POST">
+	    <input type="radio" name="id" value={{threadID}} checked><b>{{threadID}}</b></input>
 	    <textarea wrap="hard" name="post">{{post[0]}}:</textarea>
+	    
 	    <input class="button" name="submit" type="submit">
 	  </form>
 	  <button class="close-button" data-close aria-label="Close Modal" type="button">
@@ -33,7 +35,7 @@
 	</div>
       </td>
       <td><form action="#" method="POST">
-	  <button class="button" value={{post[5]}} name="upvote">Upvote</button> 
+	  <button class="button" value="{{post[3]}},{{threadID}}" name="upvote">Upvote</button> 
       </form></td>
     </tr>
 

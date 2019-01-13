@@ -101,3 +101,8 @@ narangA -- 2018-01-12 23:35
 --------------------------------------------------------------
 - added another db function for viewing topics
 - tried to remedy Qian's fxn problems
+
+qianZ -- 2019-01-13 01:39
+--------------------------------------------------------------
+- used dbEditor to display forum transactions
+- modified some dbEditor to make it fit more;

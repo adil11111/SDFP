@@ -48,12 +48,15 @@ def likeCoin(cursor,user,coin): # add coin user likes
 
 '''Thread Functions'''
 def newThread(cursor,firstPost,user,datetime,topic):
+    
     t = cursor.execute("SELECT threadID FROM threads ORDER BY threadID DESC LIMIT 1;").fetchone()
     if t is None:
         currID = 1
     else:
         currID = t[0] + 1
-    cursor.execute("INSERT INTO threads VALUES(?,?,?,?);",(str(currID),firstPost,user,topic)) # adds the thread to overall
+    cursor.execute("INSERT INTO threads VALUES(?,?,?,?);",(str(currID),topic, firstPost, user)) # adds the thread to overall
+    #order did not match that of creation--Home Affairs
+    
     v = "CREATE TABLE t" + str(currID) + " (postID INT PRIMARY KEY,post TEXT,user TEXT,time TEXT);" # makes the thread table
     cursor.execute(v)
     v = "INSERT INTO t" + str(currID) + " VALUES(?,?,?,?);"
@@ -67,8 +70,9 @@ def newThread(cursor,firstPost,user,datetime,topic):
 def addToThread(cursor,post,threadID,user,datetime):
     v = "SELECT postID FROM t" + str(threadID) + " ORDER BY postID DESC LIMIT 1;"
     t = cursor.execute(v).fetchone()[0] + 1
-    v = "INSERT INTO " + user + "_posts VALUES(?,?,?);"
-    cursor.execute(v,(threadID,t,post))
+    if user!="Anonymous":
+        v = "INSERT INTO " + user + "_posts VALUES(?,?,?);"
+        cursor.execute(v,(threadID,t,post))
     v = "INSERT INTO t" + str(threadID) + " VALUES(?,?,?,?);"
     cursor.execute(v,(t,post,user,datetime))
 
@@ -77,7 +81,8 @@ def viewThreads(cursor):
     return val
 
 def viewThread(cursor,threadID):
-    v = "SELECT * FROM t" + str(threadID) + ";"
+    v = "SELECT user,post,time,postID FROM t" + str(threadID) + ";"
+    print(v)
     val = list(cursor.execute(v))
     return val
 
