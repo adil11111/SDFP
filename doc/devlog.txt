@@ -87,3 +87,8 @@ peciR -- 2018-01-11 11:24
 - add methods in the crypto.py to get more csv data to test with graph.py
 - graph.py creates the graph as expected, and the iFrame it generates is also functional as an HTML snippet :3
 - Comment methods in crypto.py and graph.py
+
+qianZ -- 2019-01-12 19:52
+--------------------------------------------------------------
+- bettered js for reveal in comment
+- tried to add user login fxn unsuccessfully

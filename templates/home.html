@@ -32,6 +32,7 @@
       <li><a href="/register_page"> Sign Up</a></li>
       {% else %}
       <li> <a href="/profile"> Profile</a></li>
+      <li> <a href="/logout"> LogOut </a></li>
       {% endif %}
   </ul></div>
 </div>
@@ -43,6 +44,23 @@
 
 {% block content %}
 <h1 class="text-center"> CryptoUwU </h1>
+<br>
+
+{% for message in msgs %}
+<!-- this part not sure if works -->
+{% if message == "Registration Successful!" %}
+<div class="callout primary center" data-closable>
+  {% else}
+<div class="callout alert center" data-closable>
+{% endif %}
+<!-- ^^ not sure if works ^^-->  
+    <p>{{ message }}</p>
+    <button class="close-button" aria-label="Dismiss alert" type="button" data-close>
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+{% endfor %}
+
 <br><br>
 Landing stuff
 

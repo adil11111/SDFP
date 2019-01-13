@@ -18,4 +18,23 @@
 
 {% block content %}
 <h1 class="text-center"> CryptoUwU Register Page</h1>
+{% for message in msgs %}
+<div class="callout alert center" data-closable>
+  <p>{{ message }}</p>
+  <button class="close-button" aria-label="Dismiss alert" type="button" data-close>
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{% endfor %}
+
+<div class="grid-container">
+  <form action="/register" method="POST">
+    Username:    <br>
+    <input type="text" name="username" placeholder="username">
+    Password:<br>
+    <input style="width:100%" type="password" name="password1" placeholder="password">
+    Retype Password:<br>
+    <input style="width:100%" type="password" name="password2" placeholder="password"><br>
+    <input class="button" type="submit">
+  </form>
 {% endblock %}

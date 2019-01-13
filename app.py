@@ -1,9 +1,14 @@
-from flask import Flask, render_template
 
+
+from flask import Flask, render_template
 from flask import request, session #login function
 from flask import url_for, redirect, flash #redirect functions
+import sqlite3
 
+from passlib.hash import sha256_crypt
 import os, random
+
+from util import dbEditor
 
 app = Flask(__name__)
 
@@ -11,16 +16,27 @@ app.secret_key = os.urandom(32)
 
 noUser=True #general login status
 
+db = sqlite3.connect('data/base.db')
+c = db.cursor()
+
+
 @app.route("/")
 def root():
-    
     return render_template('home.html', notLoggedIn=noUser)
 
 @app.route("/auth", methods=["POST"])
 def authentication():
+    user=request.form['username']
+    password=request.form['password']
+    if dbEditor.check_pass(c,user,password):
+        noUser=False
+        session['username']=user
+        return render_template('profile.html')
 
+    else:
+        flash("Incorrect Login Information")
+        return redirect('/')
     
-    return "quarum unam incolunt Belgae, aliam Aquitani, tertiam qui ipsorum lingua Celtae, nostra Galli appelantur. Hi omnes lingua, institutis, legibus inter se differunt. Gallos ab Aquitanis Garumna flumen, a Belgis Matrona et Sequana dividit."
 
 @app.route('/logout')
 def logout():
@@ -34,11 +50,27 @@ def chart():
 
 @app.route("/register_page")
 def register_page():
+    
     return render_template('register.html')
 
-@app.route("/register")
+@app.route("/register", methods=['POST'])
 def register_auth():
-    return redirect('/')
+    user=request.form['username']
+    if not dbEditor.userExists(c,user):
+        password1=request.form['password1']
+        password2=request.form['password2']
+        
+        if (password1==password2):
+            password1 = sha256_crypt.hash(password1)
+            dbEditor.addUser(c,user,password1)
+            flash('Registration Successful!')
+            return redirect('/')
+        else:
+            flash('Passwords do not match.')
+            return redirect('/register_page')
+    flash('Username already taken')
+    return redirect('/register_page')
+    
 
 
 @app.route('/profile')
