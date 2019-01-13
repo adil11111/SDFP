@@ -46,14 +46,17 @@
 <h1 class="text-center"> CryptoUwU </h1>
 <br>
 
+<div class="grid-container">
+{% set msgs = get_flashed_messages() %}
+
 {% for message in msgs %}
-<!-- this part not sure if works -->
+
 {% if message == "Registration Successful!" %}
 <div class="callout primary center" data-closable>
   {% else %}
 <div class="callout alert center" data-closable>
 {% endif %}
-<!-- ^^ not sure if works ^^-->  
+
     <p>{{ message }}</p>
     <button class="close-button" aria-label="Dismiss alert" type="button" data-close>
       <span aria-hidden="true">&times;</span>
@@ -71,7 +74,7 @@ holder for chart
 
 <!-- forum cards(?) here--->
 
-<div class="grid-container">
+
   <div class="grid-x grid-padding-x">
     <div class="cell small-6"><div class="card">
 	<div class="card-divider">

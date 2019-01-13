@@ -13,23 +13,33 @@ app = Flask(__name__)
 
 app.secret_key = os.urandom(32)
 
-noUser=True #general login status
 
-db = sqlite3.connect('data/base.db')
-c = db.cursor()
+
+
+
+
+
 
 
 @app.route("/")
 def root():
-    return render_template('home.html', notLoggedIn=noUser)
+    if 'username' not in session.keys():
+        session['noUser']=True
+    else:
+        session['noUser']=False
+    return render_template('home.html', notLoggedIn=session["noUser"])
 
 @app.route("/auth", methods=["POST"])
 def authentication():
     user=request.form['username']
     password=request.form['password']
+    db = sqlite3.connect('./data/base.db')
+    c = db.cursor()
+    #dbEditor.reset(c)
     if dbEditor.check_pass(c,user,password):
-        noUser=False
+        session["noUser"]=False
         session['username']=user
+        db.close()
         return render_template('profile.html')
 
     else:
@@ -40,12 +50,13 @@ def authentication():
 @app.route('/logout')
 def logout():
     #pop user from session
-    noUser = True
+    session.pop('username')
+    session["noUser"] = True
     return redirect('/')
 
 @app.route("/chart")
 def chart():
-    return render_template('charts.html', notLoggedIn=noUser)
+    return render_template('charts.html', notLoggedIn=session["noUser"])
 
 @app.route("/register_page")
 def register_page():
@@ -55,17 +66,23 @@ def register_page():
 @app.route("/register", methods=['POST'])
 def register_auth():
     user=request.form['username']
+    db = sqlite3.connect('./data/base.db')
+    c = db.cursor()
     if not dbEditor.userExists(c,user):
         password1=request.form['password1']
         password2=request.form['password2']
         
         if (password1==password2):
             dbEditor.addUser(c,user,password1)
+            db.commit()
             flash('Registration Successful!')
+            db.close()
             return redirect('/')
         else:
+            db.close()
             flash('Passwords do not match.')
             return redirect('/register_page')
+    db.close()
     flash('Username already taken')
     return redirect('/register_page')
     
@@ -81,14 +98,14 @@ def load_forum():
     topic = request.args.get('topics')
     #could edit topic to make more English, or display as is
     #want threads=[[post, id, user],[etc]], as of now, from specific topic
-    return render_template('forum.html', notLoggedIn=noUser,topic=topic)
+    return render_template('forum.html', notLoggedIn=session["noUser"],topic=topic)
 
 @app.route("/mkthr", methods=['POST'])
 def makeThread():
     post=request.form["initPost"]
     topic=request.form["topic"]#will return as rendered in load_forum
     #some function to create thread;
-    return render_template('forum.html', notLoggedIn=noUser,topic=topic)
+    return render_template('forum.html', notLoggedIn=session["noUser"],topic=topic)
 
 
 """thread"""
@@ -100,11 +117,11 @@ def load_thread():
         #want threadname
         #want id used somewhere, not sure
         dummyPostforTesting=[["Math", "how can you calculate bitcoins","tomorrow",-100]]
-        return render_template('thread.html', notLoggedIn=noUser, posts=dummyPostforTesting)
+        return render_template('thread.html', notLoggedIn=session["noUser"], posts=dummyPostforTesting)
     else:
         postID=request.form['id']
         #function to add upvote
-        return render_template('thread.html', notLoggedIn=noUser)
+        return render_template('thread.html', notLoggedIn=session["noUser"])
         
 
 @app.route("/addPost", methods=['POST'])

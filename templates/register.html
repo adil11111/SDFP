@@ -18,6 +18,7 @@
 
 {% block content %}
 <h1 class="text-center"> CryptoUwU Register Page</h1>
+{% set msgs = get_flashed_messages() %}
 {% for message in msgs %}
 <div class="callout alert center" data-closable>
   <p>{{ message }}</p>
