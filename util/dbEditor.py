@@ -81,18 +81,20 @@ def viewThread(cursor,threadID):
     val = list(cursor.execute(v))
     return val
 
+def viewTopic(cursor,topi):
+    l = list(cursor.execute("SELECT threadID,user,post FROM threads WHERE topic = ?;",(topi,)))
+    return l
+'''
 db = sqlite3.connect('base.db')
 c = db.cursor()
 reset(c)
-'''
 addUser(c,user,passw)
-newThread(c,"he",user,"333","bti")
-newThread(c,"heee",user,"323","baa")
+newThread(c,"bti",user,"333","be")
+newThread(c,"baa",user,"323","ba")
 addToThread(c,"ha",1,user,"3333")
-t = viewThread(c,1)
-print(t)
-t = viewThreads(c)
-print(t)
-'''
+
+v = viewTopic(c,"bti")
+print(v)
 db.commit()
 db.close()
+'''

@@ -96,3 +96,8 @@ qianZ -- 2019-01-12 19:52
 --------------------------------------------------------------
 - bettered js for reveal in comment
 - tried to add user login fxn unsuccessfully
+
+narangA -- 2018-01-12 23:35
+--------------------------------------------------------------
+- added another db function for viewing topics
+- tried to remedy Qian's fxn problems
