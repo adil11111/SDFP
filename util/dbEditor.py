@@ -91,7 +91,7 @@ def viewTopic(cursor,topi):
     return l
 
 def userThreads(cursor,user):
-    v = "SELECT * FROM " + user + "_threads;"
+    v = "SELECT post,threadID FROM " + user + "_threads;"
     l = list(cursor.execute(v))
     return l
 

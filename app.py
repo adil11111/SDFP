@@ -22,6 +22,7 @@ def root():
 
     return render_template('home.html', notLoggedIn=noUser())
 
+"""login logout"""
 @app.route("/auth", methods=["POST"])
 def authentication():
     user=request.form['username']
@@ -32,7 +33,7 @@ def authentication():
     if dbEditor.check_pass(c,user,password):
         session['username']=user
         db.close()
-        return render_template('profile.html')
+        return redirect('/profile')
 
     else:
         flash("Incorrect Login Information")
@@ -47,13 +48,10 @@ def logout():
     session.pop('username')
     return redirect('/')
 
-@app.route("/chart")
-def chart():
-    return render_template('charts.html', notLoggedIn=noUser())
 
+"""register"""
 @app.route("/register_page")
 def register_page():
-    
     return render_template('register.html')
 
 @app.route("/register", methods=['POST'])
@@ -80,7 +78,7 @@ def register_auth():
     return redirect('/register_page')
     
 
-
+"""profile"""
 @app.route('/profile')
 def load_profile():
     if noUser():
@@ -88,8 +86,11 @@ def load_profile():
     db = sqlite3.connect('./data/base.db')
     c = db.cursor()
     coins=dbEditor.getCoins(c,session['username'])
-    # want threads=[[post, id],[etc]]
-    return render_template('profile.html', coins=coins)
+    threads=dbEditor.userThreads(c, session['username'])
+    posts=dbEditor.userPosts(c,session['username'])
+    #threads=[[post, id],[etc]]
+    db.close()
+    return render_template('profile.html', coins=coins, threads=threads, posts=posts)
 
 """forum """
 @app.route("/forum")
@@ -99,7 +100,7 @@ def load_forum():
     topic = request.args.get('topics')
     threads= dbEditor.viewTopic(c, topic)
     print (threads)
-    #could edit topic to make more English, or display as is
+    #could edit topic to make more English, or display as is, as now is
     #threads=[[id, post,user],[etc]] from specific topic
     db.close()
     return render_template('forum.html', notLoggedIn=noUser(),topic=topic, threads= threads)
@@ -111,21 +112,23 @@ def makeThread():
 
     db = sqlite3.connect('./data/base.db')
     c = db.cursor()
-    if noUser():
+    if noUser():#allow for not logged-in posting
         user='Anonymous'
     else:
         user=session['username']
     dbEditor.newThread(c,post,user,"now",topic)
+
     db.commit()
     db.close()
-    print('was here')
-    #some function to create thread;
+    
+    
     return redirect('/forum?topics='+topic)
 
 
 """thread"""
 @app.route("/thread", methods=['POST','GET'])
 def load_thread():
+    
     if request.method=="GET":
         threadID = request.args.get('id')#or perhaps name?
         print(threadID)
@@ -133,13 +136,11 @@ def load_thread():
         c = db.cursor()
         posts = dbEditor.viewThread(c, threadID)
         #posts=[[user, post, timestamp, upvotes],[etc]] as of now, of specific thread
-        #want threadname
-        #want id used somewhere, not sure
         #dummyPostforTesting=[["Math", "how can you calculate bitcoins","tomorrow",-100]]
         db.close()
         return render_template('thread.html', notLoggedIn=noUser(), posts=posts, threadname=posts[0][1], threadID=threadID)
     else:
-
+        """Upvote???"""
         #if wants to incorporate this, would need some login requirement, and disable function dependent on user record...
         info=request.form['upvote'].split(',')
         postID=info[0]
@@ -150,10 +151,12 @@ def load_thread():
 
 @app.route("/addPost", methods=['POST'])
 def addPost():
+    """addPosts"""
     threadid=request.form['id']
     content=request.form['post']
     db = sqlite3.connect('./data/base.db')
     c = db.cursor()
+    """allow for not logged in users to post"""
     if noUser():
         user = "Anonymous"
     else:
@@ -163,6 +166,12 @@ def addPost():
     db.close()
     
     return redirect('/thread?id='+threadid)
+
+
+
+@app.route("/chart")
+def chart():
+    return render_template('charts.html', notLoggedIn=noUser())
 
 
 

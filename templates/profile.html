@@ -18,7 +18,7 @@
 	  <!-- threads=[[post, id],[etc]]-->
 	  {% for thread in threads %}
 	  <tr>
-	    <td><a href="/thread?id="+{{thread[1]}}>{{ thread[0] }}</a></td>
+	    <td><a href="/thread?id={{thread[1]}}">{{ thread[0] }}</a></td>
 	    
 	  </tr>
 
@@ -31,7 +31,25 @@
  
 
   <!-- something here?-->
-  
+  <div  class="cell small-3">
+    <table class="hover">
+      <thead><tr>
+	  <th> Your Posts </th>
+      </tr></thead>
+      <tbody>
+	
+	<!-- posts=[[threadID, postID, post],[ etc]]-->
+	{% for post in posts %}
+	<tr>
+	  <td><a href="/thread?id={{post[0]}}#{{post[1]}}">{{ post[2] }}</a></td>
+	</tr>
+
+	{% endfor %}
+	
+      </tbody>
+      
+    </table>
+  </div>
   <div  class="cell small-3">
     <table class="hover">
       <thead><tr>

@@ -111,3 +111,7 @@ narangA -- 2019-01-13 10:20
 --------------------------------------------------------------
 - modified dbEditor to better encompass app's needs;
 - added new functions for user functionality; 
+
+qianZ -- 2019-01-13 14:19
+--------------------------------------------------------------
+- added some profile fxns

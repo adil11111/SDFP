@@ -16,7 +16,7 @@
     <!-- posts=[[user, post, timestamp, upvotes,<id>],[etc]]-->
     {% for post in posts %}
     <tr>
-      <td>{{post[0]}}</td><td>{{post[1]}}</td>
+      <td id="{{post[3]}}">{{post[0]}}</td><td>{{post[1]}}</td>
       <td>{{post[2]}}</td><td>{{post[4]}}</td>
       <td>
 	<button class="button" data-open="addPost"> Comment</button>
