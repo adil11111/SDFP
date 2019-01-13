@@ -10,13 +10,13 @@ Project Description:
 We are creating a cryptocurrency forum that allows users to have meaningful discussion about important topics in the crypto world.
 
 
- ______   ______   __   __   __       ______   _______     
-/_____/\ /_____/\ /_/\ /_/\ /_/\     /_____/\ /______/\    
-\:::_ \ \\::::_\/_\:\ \\ \ \\:\ \    \:::_ \ \\::::__\/__  
- \:\ \ \ \\:\/___/\\:\ \\ \ \\:\ \    \:\ \ \ \\:\ /____/\ 
-  \:\ \ \ \\::___\/_\:\_/.:\ \\:\ \____\:\ \ \ \\:\\_  _\/ 
-   \:\/.:| |\:\____/\\ ..::/ / \:\/___/\\:\_\ \ \\:\_\ \ \ 
-    \____/_/ \_____\/ \___/_(   \_____\/ \_____\/ \_____\/ 
+ ______   ______   __   __   __       ______   _______
+/_____/\ /_____/\ /_/\ /_/\ /_/\     /_____/\ /______/\
+\:::_ \ \\::::_\/_\:\ \\ \ \\:\ \    \:::_ \ \\::::__\/__
+ \:\ \ \ \\:\/___/\\:\ \\ \ \\:\ \    \:\ \ \ \\:\ /____/\
+  \:\ \ \ \\::___\/_\:\_/.:\ \\:\ \____\:\ \ \ \\:\\_  _\/
+   \:\/.:| |\:\____/\\ ..::/ / \:\/___/\\:\_\ \ \\:\_\ \ \
+    \____/_/ \_____\/ \___/_(   \_____\/ \_____\/ \_____\/
 ==============================================================
 BUGS
 
@@ -49,7 +49,7 @@ Adil: Updated site map to clarify forum pages as well as landing page
 Rubin: Added a thread table in database schema to keep track of threads for all users.
 Qian: Added information about JavaScript and Foundation.
 Amit: Updated component map to promote readability and clarify confusion about app.py file.
- 
+
  adilG -- 2019-01-09 1:17
 --------------------------------------------------------------
 - Added project description
@@ -69,7 +69,7 @@ qianZ -- 2019-01-09 23:28
 peciR -- 2018-01-09 13:10
 --------------------------------------------------------------
 - Modify methods in crypto.py to take optional parameters
-- Add candlestick methods in crypto.py 
+- Add candlestick methods in crypto.py
 
 peciR -- 2018-01-10 20:50
 --------------------------------------------------------------
@@ -87,6 +87,10 @@ peciR -- 2018-01-11 11:24
 - add methods in the crypto.py to get more csv data to test with graph.py
 - graph.py creates the graph as expected, and the iFrame it generates is also functional as an HTML snippet :3
 - Comment methods in crypto.py and graph.py
+
+narangA -- 2018-01-12 17:30
+--------------------------------------------------------------
+- wrote all database functions
 
 qianZ -- 2019-01-12 19:52
 --------------------------------------------------------------
