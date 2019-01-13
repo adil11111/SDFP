@@ -26,11 +26,11 @@ def userExists(cursor,user): # checks if user exists
 
 def check_pass(cursor, user, passE): # checks if password is correct
     toCheck = cursor.execute("SELECT pass from users WHERE username = ?;", (foo_char_html(user),))
-
     try:
         return pbkdf2_sha256.verify(passE.encode("ascii", "replace"), toCheck.fetchone()[0])
     except:
         return False
+
 
 def foo_char_html(str): # parses through username
     return str.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
