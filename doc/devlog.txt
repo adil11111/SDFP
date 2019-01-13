@@ -106,3 +106,8 @@ qianZ -- 2019-01-13 01:39
 --------------------------------------------------------------
 - used dbEditor to display forum transactions
 - modified some dbEditor to make it fit more;
+
+narangA -- 2019-01-13 10:20
+--------------------------------------------------------------
+- modified dbEditor to better encompass app's needs;
+- added new functions for user functionality; 

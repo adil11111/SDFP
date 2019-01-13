@@ -48,7 +48,7 @@ def likeCoin(cursor,user,coin): # add coin user likes
 
 '''Thread Functions'''
 def newThread(cursor,firstPost,user,datetime,topic):
-    
+
     t = cursor.execute("SELECT threadID FROM threads ORDER BY threadID DESC LIMIT 1;").fetchone()
     if t is None:
         currID = 1
@@ -56,7 +56,7 @@ def newThread(cursor,firstPost,user,datetime,topic):
         currID = t[0] + 1
     cursor.execute("INSERT INTO threads VALUES(?,?,?,?);",(str(currID),topic, firstPost, user)) # adds the thread to overall
     #order did not match that of creation--Home Affairs
-    
+
     v = "CREATE TABLE t" + str(currID) + " (postID INT PRIMARY KEY,post TEXT,user TEXT,time TEXT);" # makes the thread table
     cursor.execute(v)
     v = "INSERT INTO t" + str(currID) + " VALUES(?,?,?,?);"
@@ -89,6 +89,16 @@ def viewThread(cursor,threadID):
 def viewTopic(cursor,topi):
     l = list(cursor.execute("SELECT threadID,user,post FROM threads WHERE topic = ?;",(topi,)))
     return l
+
+def userThreads(cursor,user):
+    v = "SELECT * FROM " + user + "_threads;"
+    l = list(cursor.execute(v))
+    return l
+
+def userPosts(cursor,user):
+    v = "SELECT * FROM " + user + "_posts;"
+    l = list(cursor.execute(v))
+    return l 
 '''
 db = sqlite3.connect('base.db')
 c = db.cursor()
