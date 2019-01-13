@@ -26,11 +26,11 @@ def userExists(cursor,user): # checks if user exists
 
 def check_pass(cursor, user, passE): # checks if password is correct
     toCheck = cursor.execute("SELECT pass from users WHERE username = ?;", (foo_char_html(user),))
+
     try:
         return pbkdf2_sha256.verify(passE.encode("ascii", "replace"), toCheck.fetchone()[0])
     except:
         return False
-
 
 def foo_char_html(str): # parses through username
     return str.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
@@ -58,10 +58,11 @@ def newThread(cursor,firstPost,user,datetime,topic):
     cursor.execute(v)
     v = "INSERT INTO t" + str(currID) + " VALUES(?,?,?,?);"
     cursor.execute(v,(1,firstPost,user,datetime,))
-    v = "INSERT INTO " + user + "_threads VALUES(?,?);"
-    cursor.execute(v,(currID,firstPost,))
-    v = "INSERT INTO " + user + "_posts VALUES(?,?,?);"
-    cursor.execute(v,(currID,1,firstPost))
+    if user != "Anonymous":
+        v = "INSERT INTO " + user + "_threads VALUES(?,?);"
+        cursor.execute(v,(currID,firstPost,))
+        v = "INSERT INTO " + user + "_posts VALUES(?,?,?);"
+        cursor.execute(v,(currID,1,firstPost))
 
 def addToThread(cursor,post,threadID,user,datetime):
     v = "SELECT postID FROM t" + str(threadID) + " ORDER BY postID DESC LIMIT 1;"

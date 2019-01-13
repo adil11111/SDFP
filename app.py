@@ -104,6 +104,17 @@ def load_forum():
 def makeThread():
     post=request.form["initPost"]
     topic=request.form["topic"]#will return as rendered in load_forum
+
+    db = sqlite3.connect('./data/base.db')
+    c = db.cursor()
+    if session["noUser"]:
+        user='Anonymous'
+    else:
+        user=session['username']
+    dbEditor.newThread(c,post,user,"now",topic)
+    db.commit()
+    db.close()
+    print('was here')
     #some function to create thread;
     return render_template('forum.html', notLoggedIn=session["noUser"],topic=topic)
 
