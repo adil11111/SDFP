@@ -5,7 +5,6 @@ from flask import request, session #login function
 from flask import url_for, redirect, flash #redirect functions
 import sqlite3
 
-from passlib.hash import sha256_crypt
 import os, random
 
 from util import dbEditor
@@ -61,7 +60,6 @@ def register_auth():
         password2=request.form['password2']
         
         if (password1==password2):
-            password1 = sha256_crypt.hash(password1)
             dbEditor.addUser(c,user,password1)
             flash('Registration Successful!')
             return redirect('/')
