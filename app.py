@@ -13,6 +13,10 @@ app = Flask(__name__)
 
 app.secret_key = os.urandom(32)
 
+goodTopics=['btc_economy', 'btc_tech','btc_news',
+            'eth_economy', 'eth_tech','eth_news',
+            'alt_economy', 'alt_tech','alt_news',
+            'gen_meta', 'gen_tech','gen_investment']
 
 def noUser():
     return 'username' not in session.keys()
@@ -98,6 +102,9 @@ def load_forum():
     db = sqlite3.connect('./data/base.db')
     c = db.cursor()
     topic = request.args.get('topics')
+    if topic not in goodTopics:
+        flash('Oops, this topic is not yet avaialbe')
+        return redirect('/')
     threads= dbEditor.viewTopic(c, topic)
     print (threads)
     #could edit topic to make more English, or display as is, as now is
@@ -134,11 +141,15 @@ def load_thread():
         print(threadID)
         db = sqlite3.connect('./data/base.db')
         c = db.cursor()
-        posts = dbEditor.viewThread(c, threadID)
-        #posts=[[user, post, timestamp, upvotes],[etc]] as of now, of specific thread
-        #dummyPostforTesting=[["Math", "how can you calculate bitcoins","tomorrow",-100]]
-        db.close()
-        return render_template('thread.html', notLoggedIn=noUser(), posts=posts, threadname=posts[0][1], threadID=threadID)
+        try:
+            posts = dbEditor.viewThread(c, threadID)
+            #posts=[[user, post, timestamp, upvotes],[etc]] as of now, of specific thread
+            #dummyPostforTesting=[["Math", "how can you calculate bitcoins","tomorrow",-100]]
+            db.close()
+            return render_template('thread.html', notLoggedIn=noUser(), posts=posts, threadname=posts[0][1], threadID=threadID)
+        except:
+            flash("Thread not Found")
+            return redirect('/')
     else:
         """Upvote???"""
         #if wants to incorporate this, would need some login requirement, and disable function dependent on user record...

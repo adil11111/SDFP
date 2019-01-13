@@ -77,6 +77,7 @@ def addToThread(cursor,post,threadID,user,datetime):
     cursor.execute(v,(t,post,user,datetime))
 
 def viewThreads(cursor):
+    
     val = list(cursor.execute("SELECT * FROM threads;"))
     return val
 
