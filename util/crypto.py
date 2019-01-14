@@ -2,7 +2,7 @@ import json, urllib.request
 
 API_LINK = "https://api.nomics.com/v1/"
 
-with open('../data/keys.json', 'r') as data:
+with open('data/keys.json', 'r') as data:
     api_dict = json.load(data)
 
 API_KEY = api_dict['nomics']

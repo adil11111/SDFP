@@ -4,13 +4,14 @@ import plotly.plotly as py
 import plotly.graph_objs as go
 import plotly.tools as tls
 import pandas as pd
-import crypto, json
+import json
+from util import crypto
 
 #BUG - 2018/12/16 IS MESSED UP ON NOMICS FOR BTCETH EXCHANGE ON BINANCE - NOT SURE WHY?
 #avoid that date lmao
 
 #api key stuff
-with open('../data/keys.json', 'r') as data:
+with open('data/keys.json', 'r') as data:
     api_dict = json.load(data)
 
 API_KEY = api_dict['plotly']

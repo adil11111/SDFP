@@ -1,5 +1,3 @@
-
-
 from flask import Flask, render_template
 from flask import request, session #login function
 from flask import url_for, redirect, flash #redirect functions
@@ -7,7 +5,7 @@ import sqlite3
 
 import os, random
 
-from util import dbEditor, graph
+from util import dbEditor, graph, crypto
 
 app = Flask(__name__)
 
@@ -182,12 +180,8 @@ def addPost():
 
 @app.route("/chart")
 def chart():
-    stuff=graph.BTC_price("2018-01-14")
+    stuff = graph.BTC_price("2018-01-14")
     return render_template('charts.html', notLoggedIn=noUser(), stuff=stuff)
-
-
-
-
 
 if __name__=="__main__":
     app.debug=True
