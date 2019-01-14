@@ -45,6 +45,21 @@ def gen_candlestick(data, market):
     html = tls.get_embed(url)
     return html
 
+'''
+Parameters
+start - required, the start date to track from
+end - optional, if not provided, will use the current date, otherwise this will be the end date
+'''
+def BTC_price(start, end = None):
+    '''Provides a chart of BTC from the dates specified'''
+    if end == None:
+        return gen_candlestick(crypto.candlestick_csv_url('1d', 'BTC', start), 'BTC ' + start + ' to today' )
+    else:
+        return gen_candlestick(crypto.candlestick_csv_url('1d', 'BTC', start, end),  'BTC ' + start + ' to ' + end)
+
 #Debuggin print statements
 #print(gen_candlestick(crypto.candlestick_csv_url('1d', 'BTC', '2018-11-01' , '2018-12-01'), "BTC 2018-11-01 to 2018-12-01"))
-print(gen_candlestick(crypto.candlestick_csv_url('1m', 'ETH', '2018-03-30', '2018-06-01'), 'BTC 2018-04-01 to 2018-06-01'))
+#print(gen_candlestick(crypto.candlestick_csv_url('1m', 'ETH', '2018-03-30', '2018-06-01'), 'BTC 2018-04-01 to 2018-06-01'))
+#print(gen_candlestick(crypto.candlestick_csv_url('1d', 'BTC', '2018-01-14'), 'BTC All Time'))
+#print(BTC_price("2018-01-14"))
+#print(BTC_price("2018-01-14", "2018-02-14"))
