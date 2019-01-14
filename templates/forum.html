@@ -25,7 +25,7 @@
 </table>
 
 <form action="/mkthr" method="POST">
-  <input type="radio" name="topic" value={{topic}} checked><b>{{topic}}</b></input>
+  <input type="hidden" name="topic" value={{topic}}>
   <input type="text" name="initPost" placeholder="ask a question">
   <input class="button" type="submit" value="Submit">
 </form>

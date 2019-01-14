@@ -23,8 +23,9 @@
 	<div class="reveal " data-toggle="addPost" id="addPost" data-reveal data-open data-close-on-click=false>
 	  <p class="lead"> Please enter desired content</p>
 	  <form action="/addPost" method="POST">
-	    <input type="radio" name="id" value={{threadID}} checked><b>{{threadID}}</b></input>
-	    <textarea wrap="hard" name="post">{{post[0]}}:</textarea>
+	    <input type="hidden" name="id" value={{threadID}}>
+	    Replying to {{post[0]}}:
+	    <textarea wrap="hard" name="post">@{{post[0]}}:</textarea>
 	    
 	    <input class="button" name="submit" type="submit">
 	  </form>

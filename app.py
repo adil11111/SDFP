@@ -201,8 +201,16 @@ def coins():
 
 @app.route("/prices")
 def prices():
-    coins=crypto.list_coins()
-    return render_template('prices.html', notLoggedIn=noUser(), coins=coins)
+    t=request.args.get('type')
+    market=[]
+    if t==None:
+        coins=crypto.list_coins()
+    elif t =="ex":
+        coins=[]#exchanges
+        market=[]#market
+    else:#candlestick
+        coins=[]
+    return render_template('prices.html', notLoggedIn=noUser(), coins=coins, market=market)
     
 if __name__=="__main__":
     app.debug=True
