@@ -195,6 +195,12 @@ def chart():
             stuff = graph.BTC_price(start, end)
         return render_template('charts.html', notLoggedIn=noUser(), stuff=stuff)
 
+
+@app.route("/prices")
+def prices():
+    coins=crypto.list_coins()
+    return render_template('prices.html', notLoggedIn=noUser(), coins=coins)
+    
 if __name__=="__main__":
     app.debug=True
     app.run()
