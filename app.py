@@ -7,7 +7,7 @@ import sqlite3
 
 import os, random
 
-from util import dbEditor
+from util import dbEditor, graph
 
 app = Flask(__name__)
 
@@ -182,7 +182,8 @@ def addPost():
 
 @app.route("/chart")
 def chart():
-    return render_template('charts.html', notLoggedIn=noUser())
+    stuff=graph.BTC_price("2018-01-14")
+    return render_template('charts.html', notLoggedIn=noUser(), stuff=stuff)
 
 
 
