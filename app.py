@@ -32,6 +32,7 @@ def authentication():
     db = sqlite3.connect('./data/base.db')
     c = db.cursor()
     #dbEditor.reset(c)
+
     if dbEditor.check_pass(c,user,password):
         session['username']=user
         db.close()
