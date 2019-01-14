@@ -131,6 +131,11 @@ def exchange_candles_csv_url(interval, exchange, market, start = None, end = Non
         url = API_LINK + 'candles?key=' + API_KEY + '&interval=' + interval + '&exchange=' + exchange + '&market=' + market + '&start=' + start + 'T00%3A00%3A00Z' + '&end=' + end + 'T00%3A00%3A00Z' + "&format=csv"
         return url
 
+def dashboard():
+    url = API_LINK + "dashboard?key=" + API_KEY
+    response = urllib.request.urlopen(url)
+    return json.loads(response.read())
+
 def list_coins():
     '''Returns a list of coins available on the Nomics API'''
     list_of_coins = []
@@ -151,3 +156,4 @@ def list_coins():
 #print(exchange_candles('1m', 'binance', 'BTCETH', None, '2018-12-30'))
 #print(exchange_candles('1m', 'binance', 'BTCETH', '2018-12-01' , '2018-12-30'))
 #print(exchange_candles_csv('1m', 'binance', 'BTCETH', '2018-12-01' , '2018-12-30'))
+print(dashboard())

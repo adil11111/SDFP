@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block title %} Coins {% endblock %}
+
+{% block pageTop %}
+
+<h2 class="text-center"> Coins </h2>
+<div class="grid-container">
+	<table class="hover">
+		<thead>
+			<tr>
+				<th>Currency</th>
+				<th>Current Price</th>
+				<th>Day Open</th>
+				<th>Day Volume</th>
+				<th>Week Open</th>
+				<th>Week Volume</th>
+				<th>Available Supply</th>
+				<th>Maximum Supply</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for dict in big_dict %}
+			<tr>
+				<td> {{ dict.currency }} </td>
+				<td> {{ dict.close }} </td>
+				<td> {{ dict.dayOpen }} </td>
+				<td> {{ dict.dayVolume }} </td>
+				<td> {{ dict.weekOpen }} </td>
+				<td> {{ dict.weekVolume }} </td>
+				<td> {{ dict.availableSupply }} </td>
+				<td> {{ dict.maxSupply }} </td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+</div>
+
+{% endblock %}
