@@ -11,11 +11,11 @@ from util import crypto
 #avoid that date lmao
 
 #api key stuff
-with open('data/keys.json', 'r') as data:
+with open('keys/plotly.json', 'r') as data:
     api_dict = json.load(data)
 
-API_KEY = api_dict['plotly']
-USERNAME = api_dict['plotly username']
+API_KEY = api_dict['API']
+USERNAME = api_dict['username']
 plotly.tools.set_credentials_file(username=USERNAME, api_key=API_KEY)
 
 '''

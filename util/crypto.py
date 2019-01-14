@@ -2,10 +2,10 @@ import json, urllib.request
 
 API_LINK = "https://api.nomics.com/v1/"
 
-with open('data/keys.json', 'r') as data:
+with open('keys/nomics.json', 'r') as data:
     api_dict = json.load(data)
 
-API_KEY = api_dict['nomics']
+API_KEY = api_dict['API']
 
 def coins():
     '''Returns a dictionary of all the currencies available on Nomics'''
