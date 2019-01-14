@@ -180,7 +180,7 @@ def addPost():
 
 @app.route("/chart", methods=['POST', 'GET'])
 def chart():
-    if request.method='GET':
+    if request.method == 'GET':
         stuff = graph.BTC_price("2018-01-14")
         return render_template('charts.html', notLoggedIn=noUser(), stuff=stuff)
     else:
@@ -188,7 +188,7 @@ def chart():
         end=request.form['end']
         if end==None:
             stuff=graph.BTC_price(start)
-        else if start>end:
+        elif start>end:
             stuff=graph.BTC_price(start)
         else:
             stuff = graph.BTC_price(start, end)
