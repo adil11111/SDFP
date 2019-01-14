@@ -1,9 +1,9 @@
 # Nahasapeemapetilon  
-## Rubin Peci, Adil Gondal, Amit Narang, and Qian Zhou present ...   
+## Rubin Peci, Adil Gondal, Amit Narang, and Qian Zhou    
    
 ### CryptUwU :tongue: :eyes:   
    
-A cryptocurrency forum and basic statistics tracker!   
+A cryptocurrency forum and market tool!   
    
 #### Features 
 - Allows users to make accounts, login, and make posts 
@@ -14,7 +14,7 @@ A cryptocurrency forum and basic statistics tracker!
 1. Create a virtual environment  
 `python -m venv test/`  
    
-2. Clone the repo <br>   
+2. Clone the repo       
 `git clone https://github.com/adil11111/SDFP`   
     
 3. Activate your virtual environment   
