@@ -57,10 +57,10 @@ def newThread(cursor,firstPost,user,datetime,topic):
     cursor.execute("INSERT INTO threads VALUES(?,?,?,?);",(str(currID),topic, firstPost, user)) # adds the thread to overall
     #order did not match that of creation--Home Affairs
 
-    v = "CREATE TABLE t" + str(currID) + " (postID INT PRIMARY KEY,post TEXT,user TEXT,time TEXT);" # makes the thread table
+    v = "CREATE TABLE t" + str(currID) + " (postID INT PRIMARY KEY,post TEXT,user TEXT,time TEXT,upvote INT);" # makes the thread table
     cursor.execute(v)
-    v = "INSERT INTO t" + str(currID) + " VALUES(?,?,?,?);"
-    cursor.execute(v,(1,firstPost,user,datetime,))
+    v = "INSERT INTO t" + str(currID) + " VALUES(?,?,?,?,?);"
+    cursor.execute(v,(1,firstPost,user,datetime,0))
     if user != "Anonymous":
         v = "INSERT INTO " + user + "_threads VALUES(?,?);"
         cursor.execute(v,(currID,firstPost,))
@@ -73,17 +73,15 @@ def addToThread(cursor,post,threadID,user,datetime):
     if user!="Anonymous":
         v = "INSERT INTO " + user + "_posts VALUES(?,?,?);"
         cursor.execute(v,(threadID,t,post))
-    v = "INSERT INTO t" + str(threadID) + " VALUES(?,?,?,?);"
-    cursor.execute(v,(t,post,user,datetime))
+    v = "INSERT INTO t" + str(threadID) + " VALUES(?,?,?,?,?);"
+    cursor.execute(v,(t,post,user,datetime,0))
 
 def viewThreads(cursor):
-    
     val = list(cursor.execute("SELECT * FROM threads;"))
     return val
 
 def viewThread(cursor,threadID):
-    v = "SELECT user,post,time,postID FROM t" + str(threadID) + ";"
-    print(v)
+    v = "SELECT user,post,time,postID,upvote FROM t" + str(threadID) + ";"
     val = list(cursor.execute(v))
     return val
 
@@ -99,7 +97,14 @@ def userThreads(cursor,user):
 def userPosts(cursor,user):
     v = "SELECT * FROM " + user + "_posts;"
     l = list(cursor.execute(v))
-    return l 
+    return l
+
+def votePost(cursor,threadID,postID,num):
+     v = "UPDATE t" + str(threadID) + " SET upvote = ? WHERE postID = ?;"
+     g = "SELECT upvote FROM t" + str(threadID) + " WHERE postID = ?;"
+     x = list(cursor.execute(g,(postID,)))
+     ha = x[0][0] + num
+     cursor.execute(v,(str(ha),postID,))
 '''
 db = sqlite3.connect('base.db')
 c = db.cursor()
@@ -108,8 +113,8 @@ addUser(c,user,passw)
 newThread(c,"bti",user,"333","be")
 newThread(c,"baa",user,"323","ba")
 addToThread(c,"ha",1,user,"3333")
-
-v = viewTopic(c,"bti")
+votePost(c,2,1,-1)
+v = viewThread(c,2)
 print(v)
 db.commit()
 db.close()
