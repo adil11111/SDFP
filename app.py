@@ -155,6 +155,11 @@ def load_thread():
         info=request.form['upvote'].split(',')
         postID=info[0]
         threadID=info[1]
+        db = sqlite3.connect('./data/base.db')
+        c = db.cursor()
+        dbEditor.votePost(c,threadID, postID,1)
+        db.commit()
+        db.close()
         #function to add upvote
         return redirect('/thread?id='+threadID)
         

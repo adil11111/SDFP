@@ -19,7 +19,7 @@
       <td id="{{post[3]}}">{{post[0]}}</td><td>{{post[1]}}</td>
       <td>{{post[2]}}</td><td>{{post[4]}}</td>
       <td>
-	<button class="button" data-open="addPost"> Comment</button>
+	<button class="button" data-open="addPost" {% if notLoggedIn %} disabled {% endif %}> Comment</button>
 	<div class="reveal " data-toggle="addPost" id="addPost" data-reveal data-open data-close-on-click=false>
 	  <p class="lead"> Please enter desired content</p>
 	  <form action="/addPost" method="POST">
@@ -36,7 +36,7 @@
 	</div>
       </td>
       <td><form action="#" method="POST">
-	  <button class="button" value="{{post[3]}},{{threadID}}" name="upvote">Upvote</button> 
+	  <button class="button" value="{{post[3]}},{{threadID}}" name="upvote" {% if notLoggedIn %} disabled {% endif %}>Upvote</button> 
       </form></td>
     </tr>
 
