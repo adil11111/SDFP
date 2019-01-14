@@ -28,6 +28,7 @@ def gen_candlestick(data, market):
     new_header = ['timestamp', 'low', 'open', 'close', 'high', 'volume', 'num_trades']
     df = pd.read_csv(data)
     df.columns = new_header
+
     '''
     debugging
     print(df)

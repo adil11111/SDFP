@@ -1,0 +1,30 @@
+{% extends "home.html" %}
+
+{% block title %} Prices {% endblock %}
+
+{% block content %}
+<br>
+<br>
+
+<div class="grid-container">
+<form action="/chart" method="POST">
+  <select name="coin">
+    {% for coin in coins %}
+    <option value={{coin}}>{{coin}}</option>
+    {% endfor %}
+  </select>
+  Start Date:<br>
+  <input type="date" name="start"
+       value="2018-01-14"
+	 min="2018-01-14">
+  <br>
+  End Date:<br>
+  <input type="date" name="end"
+	 min="2018-01-14">
+  <input type="submit">
+  
+</form>
+</div>
+
+
+{% endblock %}
