@@ -178,10 +178,21 @@ def addPost():
 
 
 
-@app.route("/chart")
+@app.route("/chart", methods=['POST', 'GET'])
 def chart():
-    stuff = graph.BTC_price("2018-01-14")
-    return render_template('charts.html', notLoggedIn=noUser(), stuff=stuff)
+    if request.method='GET':
+        stuff = graph.BTC_price("2018-01-14")
+        return render_template('charts.html', notLoggedIn=noUser(), stuff=stuff)
+    else:
+        start = request.form['start']
+        end=request.form['end']
+        if end==None:
+            stuff=graph.BTC_price(start)
+        else if start>end:
+            stuff=graph.BTC_price(start)
+        else:
+            stuff = graph.BTC_price(start, end)
+        return render_template('charts.html', notLoggedIn=noUser(), stuff=stuff)
 
 if __name__=="__main__":
     app.debug=True

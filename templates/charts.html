@@ -5,6 +5,18 @@
 {% block content %}
 <div class="grid-container">
 {{stuff|safe}}
+<br><br>
+<form action="/chart" method="POST">
+  Start Date:<br>
+  <input type="date" name="start"
+       value="2018-01-14"
+	 min="2018-01-14">
+  <br>
+  End Date:<br>
+  <input type="date" name="end"
+	 min="2018-01-14">
+  
+</form>
 
 
 </div>
