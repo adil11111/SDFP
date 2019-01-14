@@ -199,6 +199,11 @@ def chart():
 def coins():
    return render_template('coins.html', big_dict = crypto.dashboard())
 
+@app.route("/prices")
+def prices():
+    coins=crypto.list_coins()
+    return render_template('prices.html', notLoggedIn=noUser(), coins=coins)
+    
 if __name__=="__main__":
     app.debug=True
     app.run()
