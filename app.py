@@ -5,7 +5,7 @@ import sqlite3
 
 import os, random
 
-from util import dbEditor, crypto #graph, crypto
+from util import dbEditor, crypto, graph #graph, crypto
 
 app = Flask(__name__)
 
@@ -197,15 +197,13 @@ def chart():
     else:
         start = request.form['start']
         end=request.form['end']
-        """
         if end==None:
             stuff=graph.BTC_price(start)
         elif start>end:
             stuff=graph.BTC_price(start)
         else:
             stuff = graph.BTC_price(start, end)
-        """
-        stuff=""
+        #stuff=""
         return render_template('charts.html', notLoggedIn=noUser(), stuff=stuff)
 
 @app.route("/coins")
