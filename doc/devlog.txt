@@ -146,5 +146,9 @@ narangA -- 2019-01-15 12:52
 
 gondalA -- 2019-01-15 13:20
 --------------------------------------------------------------
-- update README.md 
+- update README.md
 
+narangA -- 2019-01-15 12:52
+--------------------------------------------------------------
+- added dbEditor functions to handle notifications.
+- might need further edits, not sure. 

@@ -19,6 +19,8 @@ def addUser(cursor,user,passE): # adds user info to tables
     cursor.execute(v)
     v = "CREATE TABLE " + user + "_posts (threadID INT, postID INT, post TEXT);"
     cursor.execute(v)
+    v = "CREATE TABLE " + user + "_notifications (user TEXT, post TEXT, threadID INT, postID INT, read INT);"
+    cursor.execute(v)
 
 def userExists(cursor,user): # checks if user exists
     exist = cursor.execute("SELECT EXISTS(SELECT 1 FROM users WHERE username = ?);", (foo_char_html(user),))
@@ -48,7 +50,6 @@ def likeCoin(cursor,user,coin): # add coin user likes
 
 '''Thread Functions'''
 def newThread(cursor,firstPost,user,datetime,topic):
-
     t = cursor.execute("SELECT threadID FROM threads ORDER BY threadID DESC LIMIT 1;").fetchone()
     if t is None:
         currID = 1
@@ -75,6 +76,14 @@ def addToThread(cursor,post,threadID,user,datetime):
         cursor.execute(v,(threadID,t,post))
     v = "INSERT INTO t" + str(threadID) + " VALUES(?,?,?,?,?,?);"
     cursor.execute(v,(t,post,user,datetime,0,""))
+    v = "SELECT user FROM t" + str(threadID) + ";"
+    l = list(cursor.execute(v))
+    for i in l:
+        v = "INSERT INTO " + user + "_notifications VALUES(?,?,?,?,?);"
+        # user, post, threadID, postID, read
+        cursor.execute(v,(i,post,threadID,t,0))
+        # 0 means unread
+        # 1 means read
 
 def viewThreads(cursor):
     val = list(cursor.execute("SELECT * FROM threads;"))
@@ -121,6 +130,19 @@ def votePost(cursor,threadID,postID,num,user):
          cursor.execute(t,(s,postID))
 
 '''Notifs Functions'''
+
+def getReadNotifs(cursor,user):
+    v = "SELECT * FROM " + user + "_notifications WHERE read = ?;"
+    return list(cursor.execute(v,(1,)))
+
+get getUnreadNotifs(cursor,user):
+    v = "SELECT * FROM " + user + "_notifications WHERE read = ?;"
+    return list(cursor.execute(v,(0,)))
+    
+def readNotif(cursor,user,threadID,postID):
+    # trigger refresh of page with notif gone to read
+    v = "UPDATE " + user + "_notifications SET read = ? WHERE threadID = ?, postID = ?;"
+    cursor.execute(v,(1,threadID,postID,)) # turns this read
 
 
 db = sqlite3.connect('data/base.db')
