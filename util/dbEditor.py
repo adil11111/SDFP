@@ -135,7 +135,7 @@ def getReadNotifs(cursor,user):
     v = "SELECT * FROM " + user + "_notifications WHERE read = ?;"
     return list(cursor.execute(v,(1,)))
 
-get getUnreadNotifs(cursor,user):
+def getUnreadNotifs(cursor,user):
     v = "SELECT * FROM " + user + "_notifications WHERE read = ?;"
     return list(cursor.execute(v,(0,)))
     
