@@ -42,7 +42,7 @@
 {% if not notLoggedIn %}
 <form action="/mkthr" method="POST">
   <input type="hidden" name="topic" value={{topic}}>
-  <input type="text" name="initPost" placeholder="ask a question">
+  <textarea name="initPost" rows="5" cols="50" placeholder="Make your post here!" required autofocus></textarea>
   <input class="button" type="submit" value="Submit">
 </form>
 {% endif %}
