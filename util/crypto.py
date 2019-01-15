@@ -132,6 +132,7 @@ def exchange_candles_csv_url(interval, exchange, market, start = None, end = Non
         return url
 
 def dashboard():
+    '''Returns dashboard information regarding all the currencies on Nomics in JSON format'''
     url = API_LINK + "dashboard?key=" + API_KEY
     response = urllib.request.urlopen(url)
     return json.loads(response.read())
