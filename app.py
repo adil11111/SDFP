@@ -92,7 +92,12 @@ def load_profile():
     threads=dbEditor.userThreads(c, session['username'])
     posts=dbEditor.userPosts(c,session['username'])
     #threads=[[post, id],[etc]]
+    readPosts=[]
+    #[[user,post,post_id,thread_id]]
+    unreadPosts=[]
+    #[[user,post,post_id,thread_id]]
     db.close()
+
     return render_template('profile.html', coins=coins, threads=threads, posts=posts)
 
 """forum """
