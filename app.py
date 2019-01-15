@@ -41,7 +41,7 @@ def authentication():
     else:
         flash("Incorrect Login Information")
         return redirect('/')
-    
+
 
 @app.route('/logout')
 def logout():
@@ -65,7 +65,7 @@ def register_auth():
     if not dbEditor.userExists(c,user):
         password1=request.form['password1']
         password2=request.form['password2']
-        
+
         if (password1==password2):
             dbEditor.addUser(c,user,password1)
             db.commit()
@@ -79,7 +79,7 @@ def register_auth():
     db.close()
     flash('Username already taken')
     return redirect('/register_page')
-    
+
 
 """profile"""
 @app.route('/profile')
@@ -126,15 +126,15 @@ def makeThread():
         dbEditor.newThread(c,post,user,"now",topic)
         db.commit()
         db.close()
-    
-    
+
+
     return redirect('/forum?topics='+topic)
 
 
 """thread"""
 @app.route("/thread", methods=['POST','GET'])
 def load_thread():
-    
+
     if request.method=="GET":
         threadID = request.args.get('id')#or perhaps name?
         print(threadID)
@@ -155,15 +155,15 @@ def load_thread():
         info=request.form['upvote'].split(',')
         postID=info[0]
         threadID=info[1]
-        db = sqlite3.connect('./data/base.db')
-        c = db.cursor()
-        dbEditor.votePost(c,threadID, postID,1)
-        
-        db.commit()
-        db.close()
+        if not noUser():'''mod'''
+            db = sqlite3.connect('./data/base.db')
+            c = db.cursor()
+            dbEditor.votePost(c,threadID, postID,1,session.keys['username']) '''mod'''
+            db.commit()
+            db.close()
         #function to add upvote
         return redirect('/thread?id='+threadID)
-        
+
 
 @app.route("/addPost", methods=['POST'])
 def addPost():
@@ -174,7 +174,7 @@ def addPost():
     """allow for not logged in users to post"""
     if noUser():
         flash("No user")
-        
+
     else:
         user = session['username']
         db = sqlite3.connect('./data/base.db')
@@ -182,7 +182,7 @@ def addPost():
         dbEditor.addToThread(c, content, threadid, user, "datetime")
         db.commit()
         db.close()
-    
+
     return redirect('/thread?id='+threadid)
 
 
@@ -223,7 +223,7 @@ def prices():
     else:#candlestick
         coins=[]
     return render_template('prices.html', notLoggedIn=noUser(), coins=coins, market=market)
-    
+
 if __name__=="__main__":
     app.debug=True
     app.run()

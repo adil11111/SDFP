@@ -57,10 +57,10 @@ def newThread(cursor,firstPost,user,datetime,topic):
     cursor.execute("INSERT INTO threads VALUES(?,?,?,?);",(str(currID),topic, firstPost, user)) # adds the thread to overall
     #order did not match that of creation--Home Affairs
 
-    v = "CREATE TABLE t" + str(currID) + " (postID INT PRIMARY KEY,post TEXT,user TEXT,time TEXT,upvote INT);" # makes the thread table
+    v = "CREATE TABLE t" + str(currID) + " (postID INT PRIMARY KEY,post TEXT,user TEXT,time TEXT,upvote INT,whoVote TEXT);" # makes the thread table
     cursor.execute(v)
-    v = "INSERT INTO t" + str(currID) + " VALUES(?,?,?,?,?);"
-    cursor.execute(v,(1,firstPost,user,datetime,0))
+    v = "INSERT INTO t" + str(currID) + " VALUES(?,?,?,?,?,?);"
+    cursor.execute(v,(1,firstPost,user,datetime,0,""))
     if user != "Anonymous":
         v = "INSERT INTO " + user + "_threads VALUES(?,?);"
         cursor.execute(v,(currID,firstPost,))
@@ -73,15 +73,15 @@ def addToThread(cursor,post,threadID,user,datetime):
     if user!="Anonymous":
         v = "INSERT INTO " + user + "_posts VALUES(?,?,?);"
         cursor.execute(v,(threadID,t,post))
-    v = "INSERT INTO t" + str(threadID) + " VALUES(?,?,?,?,?);"
-    cursor.execute(v,(t,post,user,datetime,0))
+    v = "INSERT INTO t" + str(threadID) + " VALUES(?,?,?,?,?,?);"
+    cursor.execute(v,(t,post,user,datetime,0,""))
 
 def viewThreads(cursor):
     val = list(cursor.execute("SELECT * FROM threads;"))
     return val
 
 def viewThread(cursor,threadID):
-    v = "SELECT user,post,time,postID,upvote FROM t" + str(threadID) + ";"
+    v = "SELECT user,post,time,postID,upvote,whoVote FROM t" + str(threadID) + ";" # not the people who upvote
     val = list(cursor.execute(v))
     return val
 
@@ -99,13 +99,27 @@ def userPosts(cursor,user):
     l = list(cursor.execute(v))
     return l
 
-def votePost(cursor,threadID,postID,num):
+def votePost(cursor,threadID,postID,num,user):
      v = "UPDATE t" + str(threadID) + " SET upvote = ? WHERE postID = ?;"
-     g = "SELECT upvote FROM t" + str(threadID) + " WHERE postID = ?;"
+     t = "UPDATE t" + str(threadID) + " SET whoVote = ? WHERE postID = ?;"
+     g = "SELECT upvote,whoVote FROM t" + str(threadID) + " WHERE postID = ?;"
      x = list(cursor.execute(g,(postID,)))
-     ha = x[0][0] + num
-     cursor.execute(v,(str(ha),postID,))
-'''
+    # print(x)
+     if (len(x[0][1]) > 0):
+         t = x[0][1].split("!")
+         if user not in t:
+             ha = x[0][0] + num
+             t.append(user)
+             s = "!"
+             s = s.join(ha)
+             cursor.execute(v,(str(ha),postID,s))
+     else:
+         ha = x[0][0] + num
+         s = user + "!"
+         print(s,ha)
+         cursor.execute(v,(ha,postID))
+         cursor.execute(t,(s,postID))
+
 db = sqlite3.connect('base.db')
 c = db.cursor()
 reset(c)
@@ -113,9 +127,10 @@ addUser(c,user,passw)
 newThread(c,"bti",user,"333","be")
 newThread(c,"baa",user,"323","ba")
 addToThread(c,"ha",1,user,"3333")
-votePost(c,2,1,-1)
+print(viewThreads(c))
+print(viewThread(c,2))
+votePost(c,2,1,-1,user)
 v = viewThread(c,2)
 print(v)
 db.commit()
 db.close()
-'''
