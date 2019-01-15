@@ -139,3 +139,7 @@ peciR -- 2018-01-14 23:30
 - Procure the methods that allow the user to pick out of a list of coins on the Nomics API
 - Fix bugs regarding the charts
 - Clean up the HTML templating
+
+narangA -- 2019-01-15 12:52
+--------------------------------------------------------------
+- cleared database, fixed error with wiping / reset function
