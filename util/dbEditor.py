@@ -120,7 +120,10 @@ def votePost(cursor,threadID,postID,num,user):
          cursor.execute(v,(ha,postID))
          cursor.execute(t,(s,postID))
 
-db = sqlite3.connect('base.db')
+'''Notifs Functions'''
+
+
+db = sqlite3.connect('data/base.db')
 c = db.cursor()
 reset(c)
 '''
