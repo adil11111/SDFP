@@ -35,6 +35,11 @@ CHANGES TO DESIGN AND PROJECT
 	- Added a new table - username_threads, which keeps track of all the threads a person makes
 	- Refactored the other table - username_posts, which keeps track of all the posts a person makes
 - Mention how we will use Foundation for CSS and JavaScript for some backend work
+
+2019-01-14
+- Decide that a seperate chart page will be more effective than displaying it on the main page
+- Add several options for charts vs. just showing the BTC price
+- Add a new "Coins" page that shows a dashboard data of real-time updates regarding all the coins on Nomics API
 ===========================================
 
  qianZ -- 2019-01-07 18:30
@@ -128,3 +133,9 @@ qianZ -- 2019-01-14 20:35
 narangA -- 2019-01-14 22:17
 --------------------------------------------------------------
 - stopped users from voting more than once
+
+peciR -- 2018-01-14 23:30
+--------------------------------------------------------------
+- Procure the methods that allow the user to pick out of a list of coins on the Nomics API
+- Fix bugs regarding the charts
+- Clean up the HTML templating
