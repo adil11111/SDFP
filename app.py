@@ -5,7 +5,7 @@ import sqlite3
 
 import os, random
 
-from util import dbEditor, graph, crypto
+from util import dbEditor, crypto #graph, crypto
 
 app = Flask(__name__)
 
@@ -116,16 +116,16 @@ def makeThread():
     post=request.form["initPost"]
     topic=request.form["topic"]#will return as rendered in load_forum
 
-    db = sqlite3.connect('./data/base.db')
-    c = db.cursor()
+
     if noUser():#allow for not logged-in posting
-        user='Anonymous'
+        flash('Not logged in')
     else:
         user=session['username']
-    dbEditor.newThread(c,post,user,"now",topic)
-
-    db.commit()
-    db.close()
+        db = sqlite3.connect('./data/base.db')
+        c = db.cursor()
+        dbEditor.newThread(c,post,user,"now",topic)
+        db.commit()
+        db.close()
     
     
     return redirect('/forum?topics='+topic)
@@ -158,6 +158,7 @@ def load_thread():
         db = sqlite3.connect('./data/base.db')
         c = db.cursor()
         dbEditor.votePost(c,threadID, postID,1)
+        
         db.commit()
         db.close()
         #function to add upvote
@@ -169,16 +170,18 @@ def addPost():
     """addPosts"""
     threadid=request.form['id']
     content=request.form['post']
-    db = sqlite3.connect('./data/base.db')
-    c = db.cursor()
+
     """allow for not logged in users to post"""
     if noUser():
-        user = "Anonymous"
+        flash("No user")
+        
     else:
         user = session['username']
-    dbEditor.addToThread(c, content, threadid, user, "datetime")
-    db.commit()
-    db.close()
+        db = sqlite3.connect('./data/base.db')
+        c = db.cursor()
+        dbEditor.addToThread(c, content, threadid, user, "datetime")
+        db.commit()
+        db.close()
     
     return redirect('/thread?id='+threadid)
 
@@ -187,17 +190,21 @@ def addPost():
 @app.route("/chart", methods=['POST', 'GET'])
 def chart():
     if request.method == 'GET':
-        stuff = graph.BTC_price("2018-01-14")
+        #stuff = graph.BTC_price("2018-01-14")
+        stuff=""
         return render_template('charts.html', notLoggedIn=noUser(), stuff=stuff)
     else:
         start = request.form['start']
         end=request.form['end']
+        """
         if end==None:
             stuff=graph.BTC_price(start)
         elif start>end:
             stuff=graph.BTC_price(start)
         else:
             stuff = graph.BTC_price(start, end)
+        """
+        stuff=""
         return render_template('charts.html', notLoggedIn=noUser(), stuff=stuff)
 
 @app.route("/coins")

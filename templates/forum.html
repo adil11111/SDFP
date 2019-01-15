@@ -5,6 +5,21 @@
 {% block content %}
 <h2 class="text-center"> {{topic}} Forum </h2>
 <div class="grid-container">
+
+
+{% set msgs = get_flashed_messages() %}
+
+{% for message in msgs %}
+<div class="callout alert center" data-closable>
+  <p>{{ message }}</p>
+  <button class="close-button" aria-label="Dismiss alert" type="button" data-close>
+      <span aria-hidden="true">&times;</span>
+  </button>
+  </div>
+{% endfor %}
+
+
+  
 <table class="hover">
   <thead><tr>
       <th> Post </th><th> user </th>
