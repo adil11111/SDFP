@@ -190,39 +190,56 @@ def addPost():
 
 @app.route("/chart", methods=['POST', 'GET'])
 def chart():
-    if request.method == 'GET':
-        #stuff = graph.BTC_price("2018-01-14")
-        stuff=""
-        return render_template('charts.html', notLoggedIn=noUser(), stuff=stuff)
-    else:
-        start = request.form['start']
-        end=request.form['end']
-        if end==None:
-            stuff=graph.BTC_price(start)
-        elif start>end:
-            stuff=graph.BTC_price(start)
+    stuff=""
+    try:
+        if request.method == 'GET':
+            #stuff = graph.BTC_price("2018-01-14")
+            stuff=""
+        
         else:
-            stuff = graph.BTC_price(start, end)
-        #stuff=""
-        return render_template('charts.html', notLoggedIn=noUser(), stuff=stuff)
+            start = request.form['start']
+            end=request.form['end']
+            if end==None:
+                stuff=graph.BTC_price(start)
+            elif start>end:
+                stuff=graph.BTC_price(start)
+            else:
+                stuff = graph.BTC_price(start, end)
+                #stuff=""
+    except:
+        stuff=""
+    return render_template('charts.html', notLoggedIn=noUser(), stuff=stuff)
 
 @app.route("/coins")
 def coins():
-   return render_template('coins.html', big_dict = crypto.dashboard())
+    try:
+        big_dict=crypto.dashboard()
+    except:
+        big_dict=[]
+    return render_template('coins.html', big_dict = crypto.dashboard())
 
 @app.route("/prices")
 def prices():
     t=request.args.get('type')
     market=[]
-    if t==None:
-        coins=crypto.list_coins()
-    elif t =="ex":
-        coins=[]#exchanges
-        market=[]#market
-    else:#candlestick
+    try:
+        if t==None:
+            coins=crypto.list_coins()
+        elif t =="ex":
+            coins=[]#exchanges
+            market=[]#market
+        else:#candlestick
+            coins=[]
+    except:
         coins=[]
+        market=[]
     return render_template('prices.html', notLoggedIn=noUser(), coins=coins, market=market)
 
+"""
+read/readnotifs
+read:user said this, link back to thread; change to read
+user/post/post_id/thread_id/read
+"""
 if __name__=="__main__":
     app.debug=True
     app.run()
