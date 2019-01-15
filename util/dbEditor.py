@@ -123,9 +123,6 @@ def votePost(cursor,threadID,postID,num,user):
 db = sqlite3.connect('base.db')
 c = db.cursor()
 reset(c)
-
-addUser(c,user,passw)
-reset(c)
 '''
 newThread(c,"bti",user,"333","be")
 newThread(c,"baa",user,"323","ba")

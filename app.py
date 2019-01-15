@@ -159,7 +159,7 @@ def load_thread():
         if not noUser():
             db = sqlite3.connect('./data/base.db')
             c = db.cursor()
-            dbEditor.votePost(c,threadID, postID,1,session.keys['username']) 
+            dbEditor.votePost(c,threadID, postID,1,session['username']) 
             db.commit()
             db.close()
         #function to add upvote
