@@ -3,32 +3,32 @@
 {% block title %} Profile {% endblock %}
 
 {% block content %}
-<h1 class="text-center"> CryptoUwU: Your Profile</h1>
+<h1 class="text-center"> CryptUwU: Your Profile</h1>
 
 <div class="grid-container">
   <div class="grid-x grid-padding-x">
     <div class="cell small-6">
-      
+
       <table class="hover">
 	<thead><tr>
 	    <th> Your Threads </th>
 	</tr></thead>
 	<tbody>
-	  
+
 	  <!-- threads=[[post, id],[etc]]-->
 	  {% for thread in threads %}
 	  <tr>
 	    <td><a href="/thread?id={{thread[1]}}">{{ thread[0] }}</a></td>
-	    
+
 	  </tr>
 
 	  {% endfor %}
-	  
+
 	</tbody>
-	
+
       </table>
     </div>
-    
+
 
 
     <div  class="cell small-6">
@@ -41,24 +41,24 @@
 		<th> Close</th>
 	    </tr></thead>
 	    <tbody>
-	      
+
 	      <!-- posts=[[threadID, postID, post],[ etc]]-->
 	      {% for post in posts %}
 	      <tr data-closable>
-		<td><a href="/thread?id={{post[0]}}#{{post[1]}}">{{ post[2] }}</a>    
+		<td><a href="/thread?id={{post[0]}}#{{post[1]}}">{{ post[2] }}</a>
 		</td>
 		<td><a href="#" data-close>Close</a>
 		</td>
 	      </tr>
 
 	      {% endfor %}
-	      
+
 	    </tbody>
-	    
+
 	  </table>
 
 	</div>
-	
+
 	<div  class="cell small-6">
 	  <table class="hover">
 	    <thead><tr><th> Saved Coins </th></tr></thead>
@@ -86,7 +86,7 @@
 		    <input type="hidden" name="tid" value={{post[2]}}>
 		    <input type="submit" class="button"  name="act" value="read" data-close> Read </input>
 		  </form>
-		  
+
 	      </tr>
 	      {% endfor %}
 	    </tbody>
@@ -103,9 +103,9 @@
 		  <form action="#" method="POST">
 		    <input type="hidden" name="tid" value={{post[3]}}>
 		    <input type="hidden" name="pid" value={{post[2]}}>
-		    <input type="submit" class="button"  name="act" value="{{post[0]}}:{{post[1]}}" > 
+		    <input type="submit" class="button"  name="act" value="{{post[0]}}:{{post[1]}}" >
 		  </form>
-		  
+
 	      </tr>
 	      {% endfor %}
 	    </tbody>
@@ -116,7 +116,7 @@
   </div>
 
 </div>
-      
+
 
 
 

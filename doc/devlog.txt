@@ -188,3 +188,7 @@ peciR -- 2018-01-16 11:25
 --------------------------------------------------------------
 - More bugfixes and stress-testing :3
 - Add new methods to crypto.py and a new template to fully utilize the features on /charts
+
+narangA -- 2019-01-16 12:31
+--------------------------------------------------------------
+- changed from CryptoUwu to CryptUwu
