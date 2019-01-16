@@ -113,12 +113,10 @@ def load_profile():
         threads=dbEditor.userThreads(c, session['username'])
         posts=dbEditor.userPosts(c,session['username'])
         #threads=[[post, id],[etc]]
-<<<<<<< HEAD
+
         readPosts =dbEditor.getReadNotifs(c,session['username'])
-=======
-        
         readPosts=dbEditor.getReadNotifs(c,session['username'])
->>>>>>> 357d3d25a5bdf1097c422c9a7047f4549565fde1
+
         #[[user,post,thread_id, postid]]
         unreadPosts =dbEditor.getUnreadNotifs(c,session['username'])
         #[[user,post,threadid, postid]]
