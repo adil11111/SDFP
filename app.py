@@ -24,7 +24,7 @@ def noUser():
 
 def notificationJoiner(l):
     # pass this the call of getUnreadNotifs and it'll create the message to "alert"
-    # then link it to the l[2] and l[3]. 
+    # then link it to the l[2] and l[3].
     user = l[0]
     action = l[1]
     strToReturn = "@" + user + action + "your post."
@@ -169,7 +169,7 @@ def load_thread():
 
     if request.method=="GET":
         threadID = request.args.get('id')#or perhaps name?
-        print(threadID)
+        #print(threadID)
         db = sqlite3.connect('./data/base.db')
         c = db.cursor()
         try:

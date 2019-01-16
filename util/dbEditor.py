@@ -157,13 +157,13 @@ def readNotif(cursor,user,threadID,postID):
     v = "UPDATE " + user + "_notifications SET read = ? WHERE threadID = ? AND postID = ?;"
     cursor.execute(v,(1,threadID,postID,)) # turns this read
 
-
+'''
 db = sqlite3.connect('data/base.db')
 c = db.cursor()
-#reset(c)
+reset(c)
 addUser(c,user,passw)
-addUser(c,user2,passw)
-addUser(c,user3,passw)
+addUser(c,user2,"he")
+addUser(c,user3,"ha")
 newThread(c,"bti",user,"333","be")
 newThread(c,"baa",user2,"323","ba")
 addToThread(c,"ha",1,user2,"3333")
@@ -173,3 +173,4 @@ votePost(c,2,1,-1,user2)
 print(viewThread(c,2))
 db.commit()
 db.close()
+'''
