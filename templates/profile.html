@@ -3,7 +3,7 @@
 {% block title %} Profile {% endblock %}
 
 {% block content %}
-<h1 class="text-center"> CryptUwU: Your Profile</h1>
+<h1 class="text-center"> CryptUwU: {{user}}'s Profile</h1>
 
 <div class="grid-container">
   <div class="grid-x grid-padding-x">
@@ -84,7 +84,7 @@
 		  <form action="#" method="POST">
 		    <input type="hidden" name="pid" value={{post[3]}}>
 		    <input type="hidden" name="tid" value={{post[2]}}>
-		    <input type="submit" class="button"  name="act" value="read" data-close> Read </input>
+		    <input type="submit" class="button"  name="act" value="read" data-close> 
 		  </form>
 
 	      </tr>

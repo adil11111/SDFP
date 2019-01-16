@@ -14,10 +14,19 @@ app = Flask(__name__)
 
 app.secret_key = os.urandom(32)
 
-goodTopics=['btc_economy', 'btc_tech','btc_news',
-            'eth_economy', 'eth_tech','eth_news',
-            'alt_economy', 'alt_tech','alt_news',
-            'gen_meta', 'gen_tech','gen_tips']
+goodTopics={'btc_economy':"Bitcoin Economy",
+            'btc_tech':"Bitcoin Technology",
+            'btc_news':"Bitcoin News",
+            'eth_economy':"Ethereum Economy",
+            'eth_tech':"Ethereum Technology",
+            'eth_news':"Ethereum News",
+            'alt_economy':"Alt Coins Economy",
+            'alt_tech':"Alt Coins Technology",
+            'alt_news':"Alt Coins News",
+            'gen_meta':"General: Meta",
+            'gen_tech':"General: Technology",
+            'gen_tips':"General: Investment Tips"}
+
 
 def noUser():
     return 'username' not in session.keys()
@@ -104,12 +113,13 @@ def load_profile():
         threads=dbEditor.userThreads(c, session['username'])
         posts=dbEditor.userPosts(c,session['username'])
         #threads=[[post, id],[etc]]
+        
         readPosts=dbEditor.getReadNotifs(c,session['username'])
         #[[user,post,thread_id, postid]]
         unreadPosts=dbEditor.getUnreadNotifs(c,session['username'])
         #[[user,post,threaid, postid]]
         db.close()
-        return render_template('profile.html', coins=coins, threads=threads, posts=posts,read_posts=readPosts, unread_posts=unreadPosts)
+        return render_template('profile.html', coins=coins, threads=threads, posts=posts,read_posts=readPosts, unread_posts=unreadPosts,user=session['username'])
     else:
         pid=request.form['pid']
         tid=request.form['tid']
@@ -133,7 +143,7 @@ def load_forum():
     db = sqlite3.connect('./data/base.db')
     c = db.cursor()
     topic = request.args.get('topics')
-    if topic not in goodTopics:
+    if topic not in goodTopics.keys():
         flash('Oops, this topic is not yet available')
         return redirect('/')
     threads= dbEditor.viewTopic(c, topic)
@@ -141,7 +151,8 @@ def load_forum():
     #could edit topic to make more English, or display as is, as now is
     #threads=[[id, post,user],[etc]] from specific topic
     db.close()
-    return render_template('forum.html', notLoggedIn=noUser(),topic=topic, threads= threads)
+    englishtopic=goodTopics[topic]
+    return render_template('forum.html', notLoggedIn=noUser(),topic=englishtopic, idtopic=topic, threads= threads)
 
 @app.route("/mkthr", methods=['POST'])
 def makeThread():
