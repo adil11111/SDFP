@@ -131,6 +131,34 @@ def exchange_candles_csv_url(interval, exchange, market, start = None, end = Non
         url = API_LINK + 'candles?key=' + API_KEY + '&interval=' + interval + '&exchange=' + exchange + '&market=' + market + '&start=' + start + 'T00%3A00%3A00Z' + '&end=' + end + 'T00%3A00%3A00Z' + "&format=csv"
         return url
 
+def markets():
+    '''Returns data regarding the markets Nomics supports '''
+    url = API_LINK + "markets?key=" + API_KEY
+    response = urllib.request.urlopen(url)
+    return json.loads(response.read())
+
+def list_exchanges():
+    '''Returns a list of all the exchanges supproted on Nomics'''
+    list_of_exchanges = []
+    raw = markets()
+
+    for dict in raw:
+        if not dict['exchange'] in list_of_exchanges:
+            list_of_exchanges.append(dict['exchange'])
+
+    return list_of_exchanges
+
+def list_markets_available(exchange):
+    '''Returns a list of markets available, when given a certain exchange'''
+    list_of_markets = []
+    raw = markets()
+
+    for dict in raw:
+        if dict['exchange'] == exchange:
+            list_of_markets.append(dict['market'])
+
+    return list_of_markets
+
 def dashboard():
     '''Returns dashboard information regarding all the currencies on Nomics in JSON format'''
     url = API_LINK + "dashboard?key=" + API_KEY
@@ -158,3 +186,6 @@ def list_coins():
 #print(exchange_candles('1m', 'binance', 'BTCETH', '2018-12-01' , '2018-12-30'))
 #print(exchange_candles_csv('1m', 'binance', 'BTCETH', '2018-12-01' , '2018-12-30'))
 #print(dashboard())
+#print(markets())
+#print(list_exchanges())
+#print(list_markets_available("binance"))
