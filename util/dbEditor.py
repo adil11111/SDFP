@@ -77,13 +77,14 @@ def addToThread(cursor,post,threadID,user,datetime):
     v = "INSERT INTO t" + str(threadID) + " VALUES(?,?,?,?,?,?);"
     cursor.execute(v,(t,post,user,datetime,0,""))
     v = "SELECT user FROM t" + str(threadID) + ";"
-    l = list(cursor.execute(v))
-    for i in l:
-        v = "INSERT INTO " + user + "_notifications VALUES(?,?,?,?,?);"
-        # user, post, threadID, postID, read
-        cursor.execute(v,(i,post,threadID,t,0))
-        # 0 means unread
-        # 1 means read
+    i = list(cursor.execute(v))[0]
+    
+        
+    v = "INSERT INTO " + user + "_notifications VALUES(?,?,?,?,?);"
+    # user, post, threadID, postID, read
+    cursor.execute(v,(i[0],post,threadID,t,0,))
+    # 0 means unread
+    # 1 means read
 
 def viewThreads(cursor):
     val = list(cursor.execute("SELECT * FROM threads;"))
@@ -147,7 +148,7 @@ def readNotif(cursor,user,threadID,postID):
 
 db = sqlite3.connect('data/base.db')
 c = db.cursor()
-reset(c)
+#reset(c)
 '''
 newThread(c,"bti",user,"333","be")
 newThread(c,"baa",user,"323","ba")
