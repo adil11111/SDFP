@@ -17,7 +17,7 @@ app.secret_key = os.urandom(32)
 goodTopics=['btc_economy', 'btc_tech','btc_news',
             'eth_economy', 'eth_tech','eth_news',
             'alt_economy', 'alt_tech','alt_news',
-            'gen_meta', 'gen_tech','gen_investment']
+            'gen_meta', 'gen_tech','gen_tips']
 
 def noUser():
     return 'username' not in session.keys()
