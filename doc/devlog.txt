@@ -187,4 +187,4 @@ narangA -- 2019-01-16 9:42
 peciR -- 2018-01-16 11:25
 --------------------------------------------------------------
 - More bugfixes and stress-testing :3
-- Add new methods to crypto.py and a new template to fully utilize the featuers on /charts
+- Add new methods to crypto.py and a new template to fully utilize the features on /charts
