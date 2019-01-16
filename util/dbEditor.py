@@ -2,6 +2,8 @@ import sqlite3
 from passlib.hash import pbkdf2_sha256
 
 user = "anarang"
+user2 = "an"
+user3 = "bn"
 passw = "hassh"
 
 def reset(cursor):
@@ -78,8 +80,8 @@ def addToThread(cursor,post,threadID,user,datetime):
     cursor.execute(v,(t,post,user,datetime,0,""))
     v = "SELECT user FROM t" + str(threadID) + ";"
     i = list(cursor.execute(v))[0]
-    
-        
+
+
     v = "INSERT INTO " + user + "_notifications VALUES(?,?,?,?,?);"
     # user, post, threadID, postID, read
     cursor.execute(v,(i[0],post,threadID,t,0,))
@@ -111,24 +113,27 @@ def userPosts(cursor,user):
 
 def votePost(cursor,threadID,postID,num,user):
      v = "UPDATE t" + str(threadID) + " SET upvote = ? WHERE postID = ?;"
-     t = "UPDATE t" + str(threadID) + " SET whoVote = ? WHERE postID = ?;"
-     g = "SELECT upvote,whoVote FROM t" + str(threadID) + " WHERE postID = ?;"
+     tee = "UPDATE t" + str(threadID) + " SET whoVote = ? WHERE postID = ?;"
+     g = "SELECT upvote,whoVote,user FROM t" + str(threadID) + " WHERE postID = ?;"
      x = list(cursor.execute(g,(postID,)))
     # print(x)
-     if (len(x[0][1]) > 0):
-         t = x[0][1].split("!")
+     if (len(x[0][1]) > 0 and x[0][2] is not user):
+         t = x[0][1].split("!")[:-1]
          if user not in t:
              ha = x[0][0] + num
              t.append(user)
              s = "!"
-             s = s.join(ha)
-             cursor.execute(v,(str(ha),postID,s))
-     else:
+            # print(t)
+             s = s.join(t)
+             #print(s,type(s))
+             cursor.execute(v,(ha,postID))
+             cursor.execute(tee,(s,postID))
+     elif x[0][2] is not user:
          ha = x[0][0] + num
          s = user + "!"
-         print(s,ha)
+         #print(s,ha)
          cursor.execute(v,(ha,postID))
-         cursor.execute(t,(s,postID))
+         cursor.execute(tee,(s,postID))
 
 '''Notifs Functions'''
 
@@ -139,7 +144,7 @@ def getReadNotifs(cursor,user):
 def getUnreadNotifs(cursor,user):
     v = "SELECT * FROM " + user + "_notifications WHERE read = ?;"
     return list(cursor.execute(v,(0,)))
-    
+
 def readNotif(cursor,user,threadID,postID):
     # trigger refresh of page with notif gone to read
     v = "UPDATE " + user + "_notifications SET read = ? WHERE threadID = ?, postID = ?;"
@@ -148,14 +153,18 @@ def readNotif(cursor,user,threadID,postID):
 
 db = sqlite3.connect('data/base.db')
 c = db.cursor()
-#reset(c)
+reset(c)
 '''
+addUser(c,user,passw)
+addUser(c,user2,passw)
+addUser(c,user3,passw)
 newThread(c,"bti",user,"333","be")
 newThread(c,"baa",user,"323","ba")
 addToThread(c,"ha",1,user,"3333")
 print(viewThreads(c))
 print(viewThread(c,2))
 votePost(c,2,1,-1,user)
+votePost(c,2,1,-1,user2)
 v = viewThread(c,2)
 print(v)
 '''

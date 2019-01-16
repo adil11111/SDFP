@@ -151,4 +151,8 @@ gondalA -- 2019-01-15 13:20
 narangA -- 2019-01-15 12:52
 --------------------------------------------------------------
 - added dbEditor functions to handle notifications.
-- might need further edits, not sure. 
+- might need further edits, not sure.
+
+narangA -- 2019-01-15 20:43
+--------------------------------------------------------------
+- fixed upvoting feature to account for diff users
