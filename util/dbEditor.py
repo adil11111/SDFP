@@ -115,7 +115,7 @@ def votePost(cursor,threadID,postID,num,user):
      v = "UPDATE t" + str(threadID) + " SET upvote = ? WHERE postID = ?;"
      tee = "UPDATE t" + str(threadID) + " SET whoVote = ? WHERE postID = ?;"
      g = "SELECT upvote,whoVote,user FROM t" + str(threadID) + " WHERE postID = ?;"
-     tempor = "INSERT INTO " + user + "_notifications VALUES(?,?,?,?,?);"
+     temp = "INSERT INTO " + user + "_notifications VALUES(?,?,?,?,?);"
     # (user TEXT, post TEXT, threadID INT, postID INT, read INT)
      x = list(cursor.execute(g,(postID,)))
     # print(x)
@@ -157,11 +157,10 @@ def readNotif(cursor,user,threadID,postID):
     v = "UPDATE " + user + "_notifications SET read = ? WHERE threadID = ? AND postID = ?;"
     cursor.execute(v,(1,threadID,postID,)) # turns this read
 
-
+'''
 db = sqlite3.connect('data/base.db')
 c = db.cursor()
-reset(c)
-
+#reset(c)
 addUser(c,user,passw)
 addUser(c,user2,passw)
 addUser(c,user3,passw)
@@ -174,3 +173,4 @@ votePost(c,2,1,-1,user2)
 print(viewThread(c,2))
 db.commit()
 db.close()
+'''
