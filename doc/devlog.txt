@@ -156,3 +156,8 @@ narangA -- 2019-01-15 12:52
 narangA -- 2019-01-15 20:43
 --------------------------------------------------------------
 - fixed upvoting feature to account for diff users
+
+narangA -- 2019-01-15 21:36
+--------------------------------------------------------------
+- fixed notifications bug with failed notifications
+- changed format of table for notifications to show actions (generalizing it for upvotes as well)

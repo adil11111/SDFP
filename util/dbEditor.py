@@ -21,7 +21,7 @@ def addUser(cursor,user,passE): # adds user info to tables
     cursor.execute(v)
     v = "CREATE TABLE " + user + "_posts (threadID INT, postID INT, post TEXT);"
     cursor.execute(v)
-    v = "CREATE TABLE " + user + "_notifications (user TEXT, post TEXT, threadID INT, postID INT, read INT);"
+    v = "CREATE TABLE " + user + "_notifications (user TEXT, action TEXT, threadID INT, postID INT, read INT);"
     cursor.execute(v)
 
 def userExists(cursor,user): # checks if user exists
@@ -80,11 +80,11 @@ def addToThread(cursor,post,threadID,user,datetime):
     cursor.execute(v,(t,post,user,datetime,0,""))
     v = "SELECT user FROM t" + str(threadID) + ";"
     i = list(cursor.execute(v))[0]
+    print(i)
 
-
-    v = "INSERT INTO " + user + "_notifications VALUES(?,?,?,?,?);"
+    v = "INSERT INTO " + i[0] + "_notifications VALUES(?,?,?,?,?);"
     # user, post, threadID, postID, read
-    cursor.execute(v,(i[0],post,threadID,t,0,))
+    cursor.execute(v,(user,'responded to',threadID,t,0,))
     # 0 means unread
     # 1 means read
 
@@ -115,6 +115,8 @@ def votePost(cursor,threadID,postID,num,user):
      v = "UPDATE t" + str(threadID) + " SET upvote = ? WHERE postID = ?;"
      tee = "UPDATE t" + str(threadID) + " SET whoVote = ? WHERE postID = ?;"
      g = "SELECT upvote,whoVote,user FROM t" + str(threadID) + " WHERE postID = ?;"
+     tempor = "INSERT INTO " + user + "_notifications VALUES(?,?,?,?,?);"
+    # (user TEXT, post TEXT, threadID INT, postID INT, read INT)
      x = list(cursor.execute(g,(postID,)))
     # print(x)
      if (len(x[0][1]) > 0 and x[0][2] is not user):
@@ -128,6 +130,11 @@ def votePost(cursor,threadID,postID,num,user):
              #print(s,type(s))
              cursor.execute(v,(ha,postID))
              cursor.execute(tee,(s,postID))
+             if num is -1:
+                 strToInsert = "downvoted"
+             else:
+                 strToInsert = "upvoted"
+             cursor.execute(temp,(user,strToInsert,threadID,postID,0))
      elif x[0][2] is not user:
          ha = x[0][0] + num
          s = user + "!"
@@ -147,7 +154,7 @@ def getUnreadNotifs(cursor,user):
 
 def readNotif(cursor,user,threadID,postID):
     # trigger refresh of page with notif gone to read
-    v = "UPDATE " + user + "_notifications SET read = ? WHERE threadID = ?, postID = ?;"
+    v = "UPDATE " + user + "_notifications SET read = ? WHERE threadID = ? AND postID = ?;"
     cursor.execute(v,(1,threadID,postID,)) # turns this read
 
 
@@ -159,14 +166,13 @@ addUser(c,user,passw)
 addUser(c,user2,passw)
 addUser(c,user3,passw)
 newThread(c,"bti",user,"333","be")
-newThread(c,"baa",user,"323","ba")
-addToThread(c,"ha",1,user,"3333")
-print(viewThreads(c))
-print(viewThread(c,2))
-votePost(c,2,1,-1,user)
+newThread(c,"baa",user2,"323","ba")
+addToThread(c,"ha",1,user2,"3333")
 votePost(c,2,1,-1,user2)
-v = viewThread(c,2)
-print(v)
+votePost(c,2,1,-1,user2)
+print(getUnreadNotifs(c,user))
+readNotif(c,user,1,2)
+print(getUnreadNotifs(c,user))
 '''
 db.commit()
 db.close()
