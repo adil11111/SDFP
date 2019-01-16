@@ -5,7 +5,8 @@ import sqlite3
 
 import os, random
 
-from util import dbEditor, crypto#, graph
+from util import dbEditor, crypto
+
 try:
     from util import graph
 except:
@@ -14,10 +15,19 @@ app = Flask(__name__)
 
 app.secret_key = os.urandom(32)
 
-goodTopics=['btc_economy', 'btc_tech','btc_news',
-            'eth_economy', 'eth_tech','eth_news',
-            'alt_economy', 'alt_tech','alt_news',
-            'gen_meta', 'gen_tech','gen_tips']
+goodTopics={'btc_economy':"Bitcoin Economy",
+            'btc_tech':"Bitcoin Technology",
+            'btc_news':"Bitcoin News",
+            'eth_economy':"Ethereum Economy",
+            'eth_tech':"Ethereum Technology",
+            'eth_news':"Ethereum News",
+            'alt_economy':"Alt Coins Economy",
+            'alt_tech':"Alt Coins Technology",
+            'alt_news':"Alt Coins News",
+            'gen_meta':"General: Meta",
+            'gen_tech':"General: Technology",
+            'gen_tips':"General: Investment Tips"}
+
 
 def noUser():
     return 'username' not in session.keys()
@@ -31,7 +41,6 @@ def notificationJoiner(l):
 
 @app.route("/")
 def root():
-
     return render_template('home.html', notLoggedIn=noUser())
 
 """login logout"""
@@ -104,12 +113,17 @@ def load_profile():
         threads=dbEditor.userThreads(c, session['username'])
         posts=dbEditor.userPosts(c,session['username'])
         #threads=[[post, id],[etc]]
+<<<<<<< HEAD
         readPosts =dbEditor.getReadNotifs(c,session['username'])
+=======
+        
+        readPosts=dbEditor.getReadNotifs(c,session['username'])
+>>>>>>> 357d3d25a5bdf1097c422c9a7047f4549565fde1
         #[[user,post,thread_id, postid]]
         unreadPosts =dbEditor.getUnreadNotifs(c,session['username'])
         #[[user,post,threadid, postid]]
         db.close()
-        return render_template('profile.html', coins=coins, threads=threads, posts=posts,read_posts=readPosts, unread_posts=unreadPosts)
+        return render_template('profile.html', coins=coins, threads=threads, posts=posts,read_posts=readPosts, unread_posts=unreadPosts,user=session['username'])
     else:
         pid=request.form['pid']
         tid=request.form['tid']
@@ -122,18 +136,13 @@ def load_profile():
             db.close()
             return redirect('/thread?id='+tid+"#"+pid)
 
-
-
-
-
-
 """forum """
 @app.route("/forum", methods=['POST', 'GET'])
 def load_forum():
     db = sqlite3.connect('./data/base.db')
     c = db.cursor()
     topic = request.args.get('topics')
-    if topic not in goodTopics:
+    if topic not in goodTopics.keys():
         flash('Oops, this topic is not yet available')
         return redirect('/')
     threads= dbEditor.viewTopic(c, topic)
@@ -141,7 +150,8 @@ def load_forum():
     #could edit topic to make more English, or display as is, as now is
     #threads=[[id, post,user],[etc]] from specific topic
     db.close()
-    return render_template('forum.html', notLoggedIn=noUser(),topic=topic, threads= threads)
+    englishtopic=goodTopics[topic]
+    return render_template('forum.html', notLoggedIn=noUser(),topic=englishtopic, idtopic=topic, threads= threads)
 
 @app.route("/mkthr", methods=['POST'])
 def makeThread():
@@ -227,9 +237,7 @@ def chart():
     stuff=""
     try:
         if request.method == 'GET':
-            #stuff = graph.BTC_price("2018-01-14")
             stuff=""
-
         else:
             start = request.form['start']
             end=request.form['end']
@@ -254,20 +262,19 @@ def coins():
 
 @app.route("/prices")
 def prices():
-    t=request.args.get('type')
-    market=[]
     try:
-        if t==None:
-            coins=crypto.list_coins()
-        elif t =="ex":
-            coins=[]#exchanges
-            market=[]#market
-        else:#candlestick
-            coins=[]
+        coins=crypto.list_coins()
     except:
         coins=[]
-        market=[]
-    return render_template('prices.html', notLoggedIn=noUser(), coins=coins, market=market)
+    return render_template('prices.html', notLoggedIn=noUser(), coins=coins)
+
+@app.route("/exchanges")
+def exchanges():
+    try:
+        exchange = request.args.get('exchange')
+        return render_template('exchange.html', exch_picked=True, markets = crypto.list_markets_available(exchange))
+    except:
+        return render_template('exchange.html', exch_picked=False, exchanges = crypto.list_exchanges())
 
 if __name__=="__main__":
     app.debug=True
