@@ -79,7 +79,7 @@
 	    <tbody>
 	      <!-- unread_posts=[[user,post,thread_id,post_id]]-->
 	      {% for post in unread_posts %}
-	      <tr data-closable><td>{{post[0]}}:{{post[1]}}</td>
+	      <tr data-closable><td>@{{post[0]}} {{post[1]}} your post</td>
 		<td>
 		  <form action="#" method="POST">
 		    <input type="hidden" name="pid" value={{post[3]}}>

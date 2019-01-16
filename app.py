@@ -104,10 +104,10 @@ def load_profile():
         threads=dbEditor.userThreads(c, session['username'])
         posts=dbEditor.userPosts(c,session['username'])
         #threads=[[post, id],[etc]]
-        readPosts=dbEditor.getReadNotifs(c,session['username'])
+        readPosts =dbEditor.getReadNotifs(c,session['username'])
         #[[user,post,thread_id, postid]]
-        unreadPosts=dbEditor.getUnreadNotifs(c,session['username'])
-        #[[user,post,threaid, postid]]
+        unreadPosts =dbEditor.getUnreadNotifs(c,session['username'])
+        #[[user,post,threadid, postid]]
         db.close()
         return render_template('profile.html', coins=coins, threads=threads, posts=posts,read_posts=readPosts, unread_posts=unreadPosts)
     else:

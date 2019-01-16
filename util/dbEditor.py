@@ -91,7 +91,7 @@ def addToThread(cursor,post,threadID,user):
 
     v = "INSERT INTO " + i[0] + "_notifications VALUES(?,?,?,?,?);"
     # user, post, threadID, postID, read
-    cursor.execute(v,(user,post,threadID,t,0,))
+    cursor.execute(v,(user," responded to",threadID,t,0,))
     #cursor.execute(v,(user,'responded to',threadID,t,0,))
     # 0 means unread
     # 1 means read
@@ -123,7 +123,8 @@ def votePost(cursor,threadID,postID,num,user):
      v = "UPDATE t" + str(threadID) + " SET upvote = ? WHERE postID = ?;"
      tee = "UPDATE t" + str(threadID) + " SET whoVote = ? WHERE postID = ?;"
      g = "SELECT upvote,whoVote,user FROM t" + str(threadID) + " WHERE postID = ?;"
-     temp = "INSERT INTO " + user + "_notifications VALUES(?,?,?,?,?);"
+     x = list(cursor.execute(g,(postID,)))
+     temp = "INSERT INTO " + x[0][2] + "_notifications VALUES(?,?,?,?,?);"
     # (user TEXT, post TEXT, threadID INT, postID INT, read INT)
      x = list(cursor.execute(g,(postID,)))
     # print(x)
@@ -140,9 +141,9 @@ def votePost(cursor,threadID,postID,num,user):
              cursor.execute(v,(ha,postID))
              cursor.execute(tee,(s,postID))
              if num is -1:
-                 strToInsert = "downvoted"
+                 strToInsert = " downvoted"
              else:
-                 strToInsert = "upvoted"
+                 strToInsert = " upvoted"
              cursor.execute(temp,(user,strToInsert,threadID,postID,0))
      elif x[0][2] is not user:
          ha = x[0][0] + num
