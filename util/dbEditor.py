@@ -1,5 +1,6 @@
 import sqlite3
 from passlib.hash import pbkdf2_sha256
+import datetime
 
 user = "anarang"
 user2 = "an"
@@ -51,7 +52,8 @@ def likeCoin(cursor,user,coin): # add coin user likes
     cursor.execute("UPDATE coins SET listCoins = ? WHERE username = ?;",(t,foo_char_html(user),))
 
 '''Thread Functions'''
-def newThread(cursor,firstPost,user,datetime,topic):
+def newThread(cursor,firstPost,user,topic):
+    dt = str(datetime.datetime.now())
     t = cursor.execute("SELECT threadID FROM threads ORDER BY threadID DESC LIMIT 1;").fetchone()
     if t is None:
         currID = 1
@@ -63,25 +65,27 @@ def newThread(cursor,firstPost,user,datetime,topic):
     v = "CREATE TABLE t" + str(currID) + " (postID INT PRIMARY KEY,post TEXT,user TEXT,time TEXT,upvote INT,whoVote TEXT);" # makes the thread table
     cursor.execute(v)
     v = "INSERT INTO t" + str(currID) + " VALUES(?,?,?,?,?,?);"
-    cursor.execute(v,(1,firstPost,user,datetime,0,""))
+    cursor.execute(v,(1,firstPost,user,dt,0,""))
     if user != "Anonymous":
         v = "INSERT INTO " + user + "_threads VALUES(?,?);"
         cursor.execute(v,(currID,firstPost,))
         v = "INSERT INTO " + user + "_posts VALUES(?,?,?);"
         cursor.execute(v,(currID,1,firstPost))
 
-def addToThread(cursor,post,threadID,user,datetime):
+def addToThread(cursor,post,threadID,user):
+    dt = str(datetime.datetime.now())
+    #print(dt)
     v = "SELECT postID FROM t" + str(threadID) + " ORDER BY postID DESC LIMIT 1;"
     t = cursor.execute(v).fetchone()[0] + 1
     if user!="Anonymous":
         v = "INSERT INTO " + user + "_posts VALUES(?,?,?);"
         cursor.execute(v,(threadID,t,post))
     v = "INSERT INTO t" + str(threadID) + " VALUES(?,?,?,?,?,?);"
-    cursor.execute(v,(t,post,user,datetime,0,""))
+    cursor.execute(v,(t,post,user,dt,0,""))
     v = "SELECT user FROM t" + str(threadID) + ";"
 
     #THIS ONLY RETURNS THE USER OF THE GENERAL THREAD, NOT PARTICULAR POSTS: IS THIS WHAT WE WANT?
-    
+
     i = list(cursor.execute(v))[0]
     print(i)
 
@@ -162,19 +166,20 @@ def readNotif(cursor,user,threadID,postID):
     v = "UPDATE " + user + "_notifications SET read = ? WHERE threadID = ? AND postID = ?;"
     cursor.execute(v,(1,threadID,postID,)) # turns this read
 
-
+'''
 db = sqlite3.connect('data/base.db')
 c = db.cursor()
-#reset(c)
+reset(c)
 addUser(c,user,passw)
 addUser(c,user2,passw)
 addUser(c,user3,passw)
-newThread(c,"bti",user,"333","be")
-newThread(c,"baa",user2,"323","ba")
-addToThread(c,"ha",1,user2,"3333")
+newThread(c,"bti",user,"be")
+newThread(c,"baa",user2,"ba")
+addToThread(c,"ha",1,user2)
 votePost(c,2,1,1,user2)
 votePost(c,2,1,1,user2)
 votePost(c,2,1,1,user2)
 print(viewThread(c,2))
 db.commit()
 db.close()
+'''

@@ -24,7 +24,7 @@ def noUser():
 
 def notificationJoiner(l):
     # pass this the call of getUnreadNotifs and it'll create the message to "alert"
-    # then link it to the l[2] and l[3]. 
+    # then link it to the l[2] and l[3].
     user = l[0]
     action = l[1]
     strToReturn = "@" + user + action + "your post."
@@ -134,7 +134,7 @@ def load_forum():
     c = db.cursor()
     topic = request.args.get('topics')
     if topic not in goodTopics:
-        flash('Oops, this topic is not yet avaialbe')
+        flash('Oops, this topic is not yet available')
         return redirect('/')
     threads= dbEditor.viewTopic(c, topic)
     print (threads)
@@ -155,7 +155,7 @@ def makeThread():
         user=session['username']
         db = sqlite3.connect('./data/base.db')
         c = db.cursor()
-        dbEditor.newThread(c,post,user,"now",topic)
+        dbEditor.newThread(c,post,user,topic)
         db.commit()
         db.close()
 
@@ -178,11 +178,11 @@ def load_thread():
             #dummyPostforTesting=[["Math", "how can you calculate bitcoins","tomorrow",-100]]
             db.close()
             return render_template('thread.html', notLoggedIn=noUser(), posts=posts, threadname=posts[0][1], threadID=threadID)
-        
+
         except:
             flash("Thread not Found")
             return redirect('/')
-        
+
     else:
         """Upvote???"""
         #if wants to incorporate this, would need some login requirement, and disable function dependent on user record...
