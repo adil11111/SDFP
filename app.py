@@ -214,7 +214,7 @@ def addPost():
         user = session['username']
         db = sqlite3.connect('./data/base.db')
         c = db.cursor()
-        dbEditor.addToThread(c, content, threadid, user, "datetime")
+        dbEditor.addToThread(c, content, threadid, user)
         db.commit()
         db.close()
 
