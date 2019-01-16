@@ -22,6 +22,13 @@ goodTopics=['btc_economy', 'btc_tech','btc_news',
 def noUser():
     return 'username' not in session.keys()
 
+def notificationJoiner(l):
+    # pass this the call of getUnreadNotifs and it'll create the message to "alert"
+    # then link it to the l[2] and l[3]. 
+    user = l[0]
+    action = l[1]
+    strToReturn = "@" + user + action + "your post."
+
 @app.route("/")
 def root():
 
@@ -92,7 +99,7 @@ def load_profile():
     db = sqlite3.connect('./data/base.db')
     c = db.cursor()
     if request.method=='GET':
-       
+
         coins=dbEditor.getCoins(c,session['username'])
         threads=dbEditor.userThreads(c, session['username'])
         posts=dbEditor.userPosts(c,session['username'])
@@ -114,11 +121,11 @@ def load_profile():
         else:
             db.close()
             return redirect('/thread?id=tid#pid')
-            
-            
-   
 
-    
+
+
+
+
 
 """forum """
 @app.route("/forum", methods=['POST', 'GET'])
@@ -184,7 +191,7 @@ def load_thread():
         if not noUser():
             db = sqlite3.connect('./data/base.db')
             c = db.cursor()
-            dbEditor.votePost(c,threadID, postID,1,session['username']) 
+            dbEditor.votePost(c,threadID, postID,1,session['username'])
             db.commit()
             db.close()
         #function to add upvote
@@ -220,7 +227,7 @@ def chart():
         if request.method == 'GET':
             #stuff = graph.BTC_price("2018-01-14")
             stuff=""
-        
+
         else:
             start = request.form['start']
             end=request.form['end']
