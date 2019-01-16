@@ -79,12 +79,16 @@ def addToThread(cursor,post,threadID,user,datetime):
     v = "INSERT INTO t" + str(threadID) + " VALUES(?,?,?,?,?,?);"
     cursor.execute(v,(t,post,user,datetime,0,""))
     v = "SELECT user FROM t" + str(threadID) + ";"
+
+    #THIS ONLY RETURNS THE USER OF THE GENERAL THREAD, NOT PARTICULAR POSTS: IS THIS WHAT WE WANT?
+    
     i = list(cursor.execute(v))[0]
     print(i)
 
     v = "INSERT INTO " + i[0] + "_notifications VALUES(?,?,?,?,?);"
     # user, post, threadID, postID, read
-    cursor.execute(v,(user,'responded to',threadID,t,0,))
+    cursor.execute(v,(user,post,threadID,t,0,))
+    #cursor.execute(v,(user,'responded to',threadID,t,0,))
     # 0 means unread
     # 1 means read
 
@@ -161,10 +165,10 @@ def readNotif(cursor,user,threadID,postID):
 
 db = sqlite3.connect('data/base.db')
 c = db.cursor()
-reset(c)
+#reset(c)
 addUser(c,user,passw)
-addUser(c,user2,"he")
-addUser(c,user3,"ha")
+addUser(c,user2,passw)
+addUser(c,user3,passw)
 newThread(c,"bti",user,"333","be")
 newThread(c,"baa",user2,"323","ba")
 addToThread(c,"ha",1,user2,"3333")
