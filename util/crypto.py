@@ -76,6 +76,7 @@ def candlestick_csv_url(interval, currency, start = None, end = None):
         return url
     else:
         url = API_LINK + 'candles?key=' + API_KEY + '&interval=' + interval + '&currency=' + currency + "&start=" + start + "T00%3A00%3A00Z&end=" + end + "T00%3A00%3A00Z" + "&format=csv" 
+        print(url)
         return url
 
 def exchange_candles(interval, exchange, market, start = None, end = None):

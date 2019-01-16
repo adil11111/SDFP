@@ -232,23 +232,26 @@ def addPost():
 
 @app.route("/chart", methods=['POST', 'GET'])
 def chart():
-    stuff=""
+    stuff = "<center><h3>BitCoin Price</h3></center>" + graph.BTC_price("2018-01-15")
+
     try:
-        if request.method == 'GET':
-            stuff=""
+        start = request.form['start']
+        end = request.form['end']
+
+        if end == None:
+            print('end == none')
+            stuff = graph.gen_candlestick(crypto.candlestick_csv_url('1d', request.form['coin'], start), request.form['coin'])
+        elif start>end:
+            print('start > end')
+            stuff = graph.gen_candlestick(crypto.candlestick_csv_url('1d', request.form['coin'], start), request.form['coin'])
         else:
-            start = request.form['start']
-            end=request.form['end']
-            if end==None:
-                stuff=graph.BTC_price(start)
-            elif start>end:
-                stuff=graph.BTC_price(start)
-            else:
-                stuff = graph.BTC_price(start, end)
-                #stuff=""
+            print('else')
+            stuff = graph.gen_candlestick(crypto.candlestick_csv_url('1d', request.form['coin'], start, end), request.form['coin'])
+
+        print(stuff)
+        return render_template('charts.html', notLoggedIn=noUser(), stuff=stuff)
     except:
-        stuff=""
-    return render_template('charts.html', notLoggedIn=noUser(), stuff=stuff)
+        return render_template('charts.html', notLoggedIn=noUser(), stuff=stuff)
 
 @app.route("/coins")
 def coins():
@@ -256,24 +259,27 @@ def coins():
         big_dict=crypto.dashboard()
     except:
         big_dict=[]
-    return render_template('coins.html', big_dict = crypto.dashboard())
+    return render_template('coins.html', big_dict = crypto.dashboard(), notLoggedIn = noUser())
 
 @app.route("/prices")
 def prices():
     try:
-        coins=crypto.list_coins()
+        coins = crypto.list_coins()
     except:
         flash("unable to get list of coins")
+        print('cant get coins!')
         coins=[]
     return render_template('prices.html', notLoggedIn=noUser(), coins=coins)
 
-@app.route("/exchanges")
+@app.route("/exchanges", methods=['POST', 'GET'])
 def exchanges():
-    try:
-        exchange = request.args.get('exchange')
-        return render_template('exchange.html', exch_picked=True, markets = crypto.list_markets_available(exchange))
-    except:
+    exchange = None
+    if request.method == 'POST':
+        exchange = request.form['exchange']
+    if exchange == None:
         return render_template('exchange.html', exch_picked=False, exchanges = crypto.list_exchanges())
+    else:
+        return render_template('exchange.html', exch_picked=True, markets = crypto.list_markets_available(exchange), exchange_chosen = exchange)
 
 if __name__=="__main__":
     app.debug=True

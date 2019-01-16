@@ -8,18 +8,19 @@
 
   
   {% if not exch_picked %}
-  <form action="/exchange" method="GET">
+  <form action="/exchanges" method="POST">
 	  Exchanges:
 	  <select name="exchange">
 		{% for exchange in exchanges %}
 		<option value={{exchange}}>{{exchange}}</option>
 		{% endfor %}
 	  </select>
+	  <input class="button" type="submit">
   </form>
   {% endif %}
 
   {% if exch_picked %}
-  <form action="/chart" method="GET">
+  <form action="/chart" method="POST">
 	  Market:
 	  <select name="market">		  
 		  {% for market in markets %}
@@ -32,7 +33,7 @@
 
 	  End Date:<br>
 	  <input type="date" name="end" min="2018-01-16">
-
+	  <input type="hidden" name="exchange" value={{ exchange_chosen }}>
 	  <input class="button" type="submit">
   </form>
   {% endif %}
