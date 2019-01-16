@@ -5,8 +5,11 @@ import sqlite3
 
 import os, random
 
-from util import dbEditor, crypto, graph #graph, crypto
-
+from util import dbEditor, crypto#, graph
+try:
+    from util import graph
+except:
+    print('graph error')
 app = Flask(__name__)
 
 app.secret_key = os.urandom(32)
@@ -88,20 +91,37 @@ def load_profile():
         return redirect('/')
     db = sqlite3.connect('./data/base.db')
     c = db.cursor()
-    coins=dbEditor.getCoins(c,session['username'])
-    threads=dbEditor.userThreads(c, session['username'])
-    posts=dbEditor.userPosts(c,session['username'])
-    #threads=[[post, id],[etc]]
-    readPosts=[]
-    #[[user,post,post_id,thread_id]]
-    unreadPosts=[]
-    #[[user,post,post_id,thread_id]]
-    db.close()
+    if request.method=='GET':
+       
+        coins=dbEditor.getCoins(c,session['username'])
+        threads=dbEditor.userThreads(c, session['username'])
+        posts=dbEditor.userPosts(c,session['username'])
+        #threads=[[post, id],[etc]]
+        readPosts=dbEditor.getReadNotifs(c,session['username'])
+        #[[user,post,thread_id, postid]]
+        unreadPosts=dbEditor.getUnreadNotifs(c,session['username'])
+        #[[user,post,threaid, postid]]
+        db.close()
+        return render_template('profile.html', coins=coins, threads=threads, posts=posts,read_posts=readPosts, unread_posts=unreadPosts)
+    else:
+        pid=request.form['pid']
+        tid=request.form['tid']
+        if request.form['act']=='read':#read value
+            dbEditor.readNotif(c,session['username'],tid,pid)
+            db.commit()
+            db.close()
+            return redirect('/thread?id=tid#pid')
+        else:
+            db.close()
+            return redirect('/thread?id=tid#pid')
+            
+            
+   
 
-    return render_template('profile.html', coins=coins, threads=threads, posts=posts)
+    
 
 """forum """
-@app.route("/forum")
+@app.route("/forum", methods=['POST', 'GET'])
 def load_forum():
     db = sqlite3.connect('./data/base.db')
     c = db.cursor()

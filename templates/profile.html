@@ -28,54 +28,95 @@
 	
       </table>
     </div>
- 
+    
 
-  <!-- something here?-->
-  <div  class="cell small-3">
-    <table class="hover">
-      <thead><tr>
-	  <th> Your Posts
-	  </th>
-	  <th> Close</th>
-      </tr></thead>
-      <tbody>
+
+    <div  class="cell small-6">
+      <div class="grid-x grid-padding-x">
+	<div  class="cell small-6">
+	  <table class="hover">
+	    <thead><tr>
+		<th> Your Posts
+		</th>
+		<th> Close</th>
+	    </tr></thead>
+	    <tbody>
+	      
+	      <!-- posts=[[threadID, postID, post],[ etc]]-->
+	      {% for post in posts %}
+	      <tr data-closable>
+		<td><a href="/thread?id={{post[0]}}#{{post[1]}}">{{ post[2] }}</a>    
+		</td>
+		<td><a href="#" data-close>Close</a>
+		</td>
+	      </tr>
+
+	      {% endfor %}
+	      
+	    </tbody>
+	    
+	  </table>
+
+	</div>
 	
-	<!-- posts=[[threadID, postID, post],[ etc]]-->
-	{% for post in posts %}
-	<tr data-closable>
-	  <td><a href="/thread?id={{post[0]}}#{{post[1]}}">{{ post[2] }}</a>    
-	  </td>
-	  <td><a href="#" data-close>Close</a>
-	  </td>
-	</tr>
-
-	{% endfor %}
-	
-      </tbody>
-      
-    </table>
-
+	<div  class="cell small-6">
+	  <table class="hover">
+	    <thead><tr><th> Saved Coins </th></tr></thead>
+	    <tbody>
+	      <!-- coins=[coin1, coin2, etc]-->
+	      {% for coin in coins %}
+	      <tr><td>{{ coin }}</td></tr>
+	      {% endfor %}
+	    </tbody>
+	  </table>
+	</div>
+      </div>
+      <div class="grid-x grid-padding-x">
+	<div  class="cell small-6">
+	  <table class="hover">
+	    <thead><tr><th> Notifications </th><th> Read</th>
+	    </tr></thead>
+	    <tbody>
+	      <!-- unread_posts=[[user,post,thread_id,post_id]]-->
+	      {% for post in unread_posts %}
+	      <tr data-closable><td>{{post[0]}}:{{post[1]}}</td>
+		<td>
+		  <form action="#" method="POST">
+		    <input type="hidden" name="pid" value={{post[3]}}>
+		    <input type="hidden" name="tid" value={{post[2]}}>
+		    <input type="submit" class="button"  name="act" value="read" data-close> Read </input>
+		  </form>
+		  
+	      </tr>
+	      {% endfor %}
+	    </tbody>
+	  </table>
+	</div>
+	<div class="small-6 cell">
+	  <table class="hover">
+	    <thead><tr><th> Read Notifications </th>
+	    </tr></thead>
+	    <tbody>
+	      <!-- read_posts=[[user,post,thread_id, post_id]]-->
+	      {% for post in read_posts %}
+	      <tr><td>
+		  <form action="#" method="POST">
+		    <input type="hidden" name="tid" value={{post[3]}}>
+		    <input type="hidden" name="pid" value={{post[2]}}>
+		    <input type="submit" class="button"  name="act" value="{{post[0]}}:{{post[1]}}" > 
+		  </form>
+		  
+	      </tr>
+	      {% endfor %}
+	    </tbody>
+	  </table>
+	</div>
+      </div>
+    </div>
   </div>
-  <div  class="cell small-3">
-    <table class="hover">
-      <thead><tr>
-	  <th> Saved Coins </th>
-      </tr></thead>
-      <tbody>
-	
-	<!-- coins=[coin1, coin2, etc]-->
-	{% for coin in coins %}
-	<tr>
-	  <td>{{ coin }}</td>
-	</tr>
 
-	{% endfor %}
-	
-      </tbody>
-      
-    </table>
-  </div>
 </div>
+      
 
 
 
