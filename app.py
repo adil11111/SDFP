@@ -24,7 +24,7 @@ def noUser():
 
 def notificationJoiner(l):
     # pass this the call of getUnreadNotifs and it'll create the message to "alert"
-    # then link it to the l[2] and l[3].
+    # then link it to the l[2] and l[3]. 
     user = l[0]
     action = l[1]
     strToReturn = "@" + user + action + "your post."
@@ -92,7 +92,7 @@ def register_auth():
 
 
 """profile"""
-@app.route('/profile')
+@app.route('/profile', methods=['POST', 'GET'])
 def load_profile():
     if noUser():
         return redirect('/')
@@ -117,10 +117,10 @@ def load_profile():
             dbEditor.readNotif(c,session['username'],tid,pid)
             db.commit()
             db.close()
-            return redirect('/thread?id=tid#pid')
+            return redirect('/thread?id='+tid+"#"+pid)
         else:
             db.close()
-            return redirect('/thread?id=tid#pid')
+            return redirect('/thread?id='+tid+"#"+pid)
 
 
 
@@ -169,7 +169,7 @@ def load_thread():
 
     if request.method=="GET":
         threadID = request.args.get('id')#or perhaps name?
-        #print(threadID)
+        print(threadID)
         db = sqlite3.connect('./data/base.db')
         c = db.cursor()
         try:
@@ -178,9 +178,11 @@ def load_thread():
             #dummyPostforTesting=[["Math", "how can you calculate bitcoins","tomorrow",-100]]
             db.close()
             return render_template('thread.html', notLoggedIn=noUser(), posts=posts, threadname=posts[0][1], threadID=threadID)
+        
         except:
             flash("Thread not Found")
             return redirect('/')
+        
     else:
         """Upvote???"""
         #if wants to incorporate this, would need some login requirement, and disable function dependent on user record...
@@ -267,11 +269,6 @@ def prices():
         market=[]
     return render_template('prices.html', notLoggedIn=noUser(), coins=coins, market=market)
 
-"""
-read/readnotifs
-read:user said this, link back to thread; change to read
-user/post/post_id/thread_id/read
-"""
 if __name__=="__main__":
     app.debug=True
     app.run()

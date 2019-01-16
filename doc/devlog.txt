@@ -162,3 +162,7 @@ narangA -- 2019-01-15 21:36
 - fixed notifications bug with failed notifications
 - changed format of table for notifications to show actions (generalizing it for upvotes as well)
 - added parser
+
+qianZ -- 2019-01-15 23:38
+--------------------------------------------------------------
+- modified some template for profile.html; back-end function...?
