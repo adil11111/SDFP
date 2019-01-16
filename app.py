@@ -263,6 +263,7 @@ def prices():
     try:
         coins=crypto.list_coins()
     except:
+        flash("unable to get list of coins")
         coins=[]
     return render_template('prices.html', notLoggedIn=noUser(), coins=coins)
 
