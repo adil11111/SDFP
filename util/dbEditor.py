@@ -119,7 +119,7 @@ def votePost(cursor,threadID,postID,num,user):
     # (user TEXT, post TEXT, threadID INT, postID INT, read INT)
      x = list(cursor.execute(g,(postID,)))
     # print(x)
-     if (len(x[0][1]) > 0 and x[0][2] is not user):
+     if (len(x[0][1]) > 0):
          t = x[0][1].split("!")[:-1]
          if user not in t:
              ha = x[0][0] + num
@@ -161,7 +161,7 @@ def readNotif(cursor,user,threadID,postID):
 db = sqlite3.connect('data/base.db')
 c = db.cursor()
 reset(c)
-'''
+
 addUser(c,user,passw)
 addUser(c,user2,passw)
 addUser(c,user3,passw)
@@ -170,9 +170,7 @@ newThread(c,"baa",user2,"323","ba")
 addToThread(c,"ha",1,user2,"3333")
 votePost(c,2,1,-1,user2)
 votePost(c,2,1,-1,user2)
-print(getUnreadNotifs(c,user))
-readNotif(c,user,1,2)
-print(getUnreadNotifs(c,user))
-'''
+votePost(c,2,1,-1,user2)
+print(viewThread(c,2))
 db.commit()
 db.close()
