@@ -6,30 +6,38 @@
 
 <div class="grid-container">
 
-<form action="/exchange" method="POST">
   
-  Coins:<select name="coin">
-    {% for coin in coins %}
-    <option value={{coin}}>{{coin}}</option>
-    {% endfor %}
-  </select>
-
-  {% if market %}
-  Market:<select name="mkt">
-    {% for mkt in market %}
-    <option value={{mkt}}>{{mkt}}</option>
-    {% endfor %}
-  </select>
+  {% if not exch_picked %}
+  <form action="/exchange" method="GET">
+	  Exchanges:
+	  <select name="exchange">
+		{% for exchange in exchanges %}
+		<option value={{exchange}}>{{exchange}}</option>
+		{% endfor %}
+	  </select>
+  </form>
   {% endif %}
+
+  {% if exch_picked %}
+  <form action="/chart" method="GET">
+	  Market:
+	  <select name="market">		  
+		  {% for market in markets %}
+			<option value={{market}}>{{market}}</option>
+		  {% endfor %}
+	  </select>
   
-  Start Date:<br>
-  <input type="date" name="start" min="2018-01-14">
-  End Date:<br>
-  <input type="date" name="end"
-	 min="2018-01-14">
-  <input class="button" type="submit">
+	  Start Date:<br>
+	  <input type="date" name="start" min="2018-01-14">
+
+	  End Date:<br>
+	  <input type="date" name="end" min="2018-01-16">
+
+	  <input class="button" type="submit">
+  </form>
+  {% endif %}
+
   
-</form>
 </div>
 
 {% endblock %}

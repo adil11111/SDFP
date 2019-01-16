@@ -5,7 +5,8 @@ import sqlite3
 
 import os, random
 
-from util import dbEditor, crypto#, graph
+from util import dbEditor, crypto
+
 try:
     from util import graph
 except:
@@ -40,7 +41,6 @@ def notificationJoiner(l):
 
 @app.route("/")
 def root():
-
     return render_template('home.html', notLoggedIn=noUser())
 
 """login logout"""
@@ -131,11 +131,6 @@ def load_profile():
         else:
             db.close()
             return redirect('/thread?id='+tid+"#"+pid)
-
-
-
-
-
 
 """forum """
 @app.route("/forum", methods=['POST', 'GET'])
@@ -238,9 +233,7 @@ def chart():
     stuff=""
     try:
         if request.method == 'GET':
-            #stuff = graph.BTC_price("2018-01-14")
             stuff=""
-
         else:
             start = request.form['start']
             end=request.form['end']
@@ -265,20 +258,19 @@ def coins():
 
 @app.route("/prices")
 def prices():
-    t=request.args.get('type')
-    market=[]
     try:
-        if t==None:
-            coins=crypto.list_coins()
-        elif t =="ex":
-            coins=[]#exchanges
-            market=[]#market
-        else:#candlestick
-            coins=[]
+        coins=crypto.list_coins()
     except:
         coins=[]
-        market=[]
-    return render_template('prices.html', notLoggedIn=noUser(), coins=coins, market=market)
+    return render_template('prices.html', notLoggedIn=noUser(), coins=coins)
+
+@app.route("/exchanges")
+def exchanges():
+    try:
+        exchange = request.args.get('exchange')
+        return render_template('exchange.html', exch_picked=True, markets = crypto.list_markets_available(exchange))
+    except:
+        return render_template('exchange.html', exch_picked=False, exchanges = crypto.list_exchanges())
 
 if __name__=="__main__":
     app.debug=True
