@@ -8,7 +8,7 @@
 
   
   {% if not exch_picked %}
-  <form action="/exchanges" method="POST">
+  <form action="/exchanges" method="GET">
 	  Exchanges:
 	  <select name="exchange">
 		{% for exchange in exchanges %}
@@ -20,7 +20,7 @@
   {% endif %}
 
   {% if exch_picked %}
-  <form action="/chart" method="POST">
+  <form action="/chart" method="GET">
 	  Market:
 	  <select name="market">		  
 		  {% for market in markets %}
