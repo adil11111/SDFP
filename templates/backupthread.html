@@ -1,0 +1,82 @@
+{% extends "forum.html" %}
+
+{% block title %} 
+{{ threadname }} 
+<link rel="stylesheet" type="text/css" href="static/thread.css"/>
+{% endblock %}
+
+{% block static %}
+
+<link rel="stylesheet" href="static/thread.css">
+
+{% endblock %}
+
+
+{% block content %}
+
+
+
+
+<div class="grid-container">
+
+
+{% set msgs = get_flashed_messages() %}
+
+{% for message in msgs %}
+<div class="callout alert center" data-closable>
+  <p>{{ message }}</p>
+  <button class="close-button" aria-label="Dismiss alert" type="button" data-close>
+      <span aria-hidden="true">&times;</span>
+  </button>
+  </div>
+{% endfor %}
+
+
+
+
+  
+  <div class="table-scroll">
+<table class="hover">
+  <thead><tr>
+      <th> User </th><th> Post </th><th> Time </th><th> Upvotes </th>
+      <th> Comment</th><th> Upvote</th> 
+  </tr></thead>
+  <tbody>
+    
+    <!-- user,post,time,postID,upvote -->
+    {% for post in posts %}
+    <tr>
+      <td id="{{post[3]}}">{{post[0]}}</td><td>{{post[1]}}</td>
+      <td>{{post[2]}}</td><td>{{post[4]}}</td>
+      <td>
+	<button class="button" data-open="addPost{{post[3]}}" {% if notLoggedIn %} disabled {% endif %}> Comment</button>
+	<div class="reveal " data-toggle="addPost{{post[3]}}" id="addPost{{post[3]}}" data-reveal data-open data-close-on-click=false>
+	  <p class="lead"> Please enter desired content</p>
+	  <form action="/addPost" method="POST">
+	    <input type="hidden" name="id" value={{threadID}}>
+	    Replying to {{post[0]}}:{{post[1]}}<br>
+	    <textarea wrap="hard" name="post">@{{post[0]}}:</textarea>
+	    
+	    <input class="button" name="submit" type="submit">
+	  </form>
+	  <button class="close-button" data-close aria-label="Close Modal" type="button">
+	    <span aria-hidden="true">&times;</span>
+	  </button>
+
+	</div>
+      </td>
+      <td><form action="#" method="POST">
+	  <button class="button" value="{{post[3]}},{{threadID}}" name="upvote" {% if notLoggedIn %} disabled {% endif %}>Upvote</button> 
+      </form></td>
+    </tr>
+
+    {% endfor %}
+    
+  </tbody>
+  
+</table>
+</div>
+</div>
+
+{% endblock %}
+

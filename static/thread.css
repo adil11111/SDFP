@@ -2,4 +2,26 @@
 {
 	color: lightcyan;
 	text-align: center;
+	
+}
+.post
+{
+    padding: 5px;
+    margin: 5px;
+    
+    border: 1px solid green;
+    background-color: #F0F8FF;
+    
+}
+.post_user
+{
+    display:grid;
+    grid-template-areas:'name info buttons';
+    
+}
+.post_post
+{
+    
+    
+
 }
