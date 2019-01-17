@@ -15,6 +15,7 @@ app = Flask(__name__)
 
 app.secret_key = os.urandom(32)
 
+#Dictionary of topics
 goodTopics={'btc_economy':"Bitcoin Economy",
             'btc_tech':"Bitcoin Technology",
             'btc_news':"Bitcoin News",
@@ -29,6 +30,7 @@ goodTopics={'btc_economy':"Bitcoin Economy",
             'gen_tips':"General: Investment Tips"}
 
 
+#returns whether a user is logge in or not :3
 def noUser():
     return 'username' not in session.keys()
 
@@ -110,23 +112,22 @@ def load_profile():
     db = sqlite3.connect('./data/base.db')
     c = db.cursor()
     if request.method=='GET':
-
-        coins=dbEditor.getCoins(c,session['username'])
-        threads=dbEditor.userThreads(c, session['username'])
-        posts=dbEditor.userPosts(c,session['username'])
+        coins = dbEditor.getCoins(c,session['username'])
+        threads = dbEditor.userThreads(c, session['username'])
+        posts = dbEditor.userPosts(c,session['username'])
         #threads=[[post, id],[etc]]
 
-        readPosts =dbEditor.getReadNotifs(c,session['username'])
-        readPosts=dbEditor.getReadNotifs(c,session['username'])
+        readPosts = dbEditor.getReadNotifs(c,session['username'])
+        readPosts = dbEditor.getReadNotifs(c,session['username'])
 
         #[[user,post,thread_id, postid]]
-        unreadPosts =dbEditor.getUnreadNotifs(c,session['username'])
+        unreadPosts = dbEditor.getUnreadNotifs(c,session['username'])
         #[[user,post,threadid, postid]]
         db.close()
         return render_template('profile.html', coins=coins, threads=threads, posts=posts,read_posts=readPosts, unread_posts=unreadPosts,user=session['username'])
     else:
-        pid =request.form['pid']
-        tid =request.form['tid']
+        pid = request.form['pid']
+        tid = request.form['tid']
 
         if request.form['act'] == 'read':#read value
             dbEditor.readNotif(c,session['username'],tid,pid)
@@ -159,7 +160,7 @@ def load_forum():
 
     return render_template('forum.html', notLoggedIn=noUser(),topic=englishtopic, idtopic=topic, threads= threads)
 
-@app.route("/mkthr", methods=['POST'])
+@app.route("/mkthr", methods = ['POST'])
 def makeThread():
     post = request.form["initPost"]
     topic = request.form["topic"]#will return as rendered in load_forum
@@ -264,7 +265,6 @@ def chart():
             csv_url = crypto.exchange_candles_csv_url('1d', exchange, market, start, end)
             graph_title = request.args.get('market') + ' price on ' + request.args.get('exchange')
             stuff = graph.gen_candlestick(csv_url, graph_title)
-
         #print(stuff)
         return render_template('charts.html', notLoggedIn=noUser(), stuff = '<center><h3>' + graph_title + '</center></h3>' + stuff)
     except:

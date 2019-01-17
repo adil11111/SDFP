@@ -8,6 +8,8 @@
 
   
   {% if not exch_picked %}
+  <h2 class="text-center"> Exchange </h2>
+  <center><p>Pick an exchange you want to view market info from!</p></center>
   <form action="/exchanges" method="GET">
 	  Exchanges:
 	  <select name="exchange">
@@ -20,6 +22,9 @@
   {% endif %}
 
   {% if exch_picked %}
+  <h2 class="text-center">Market</h2>
+  <center><p>Pick a market you want to view a candlestick chart for</p></center>
+  <center><p><em>Note that not all markets will have sufficient or 'good' data</em></p></center>
   <form action="/chart" method="GET">
 	  Market:
 	  <select name="market">		  
