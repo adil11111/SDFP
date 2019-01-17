@@ -2,10 +2,12 @@ import sqlite3
 from passlib.hash import pbkdf2_sha256
 import datetime
 
+'''
 user = "anarang"
 user2 = "an"
 user3 = "bn"
 passw = "hassh"
+'''
 
 def reset(cursor):
     tables = list(cursor.execute("select name from sqlite_master where type is 'table'"))

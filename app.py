@@ -208,7 +208,7 @@ def load_thread():
             c = db.cursor()
             dbEditor.votePost(c,threadID, postID,1,session['username'])
             db.commit()
-            db.close()
+
         #function to add upvote
         return redirect('/thread?id='+threadID)
 
