@@ -9,7 +9,23 @@ user3 = "bn"
 passw = "hassh"
 '''
 
+'''
+tables
+users: username, pass
+coins: username, listCoins
+threads: threadID, topic, post, user
+user_threads (for each user): threadID, post
+user_posts (for each user): threadID, postID, post
+user_notifications (for each user): user, action, threadID, postID, read
+t# (for each thread): postID, post, user, time, upvote, whoVote
+
+
+
+'''
+
+
 def reset(cursor):
+    # this function resets the database
     tables = list(cursor.execute("select name from sqlite_master where type is 'table'"))
     cursor.executescript(';'.join(["drop table if exists %s" %i for i in tables])) # got inspo for this from a stackOverflow post
     cursor.execute("CREATE TABLE users (username TEXT PRIMARY KEY, pass TEXT);")
