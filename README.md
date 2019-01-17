@@ -71,7 +71,7 @@ Put that API key in the `keys/plotly.json`, replace the empty strings for "usern
 `python app.py`     
 *If any errors arise, verify you completed the above steps, and try again. If the error still persists, feel free to open an issue in our repo!*    
     
-8. Open your browser, and connect to this [link](localhost:5000)   
+8. Open your browser, and connect to this [link](http://localhost:5000)   
 The link points to localhost:5000, which is the server on which the program is running on your computer   
     
 9. Use the site! Make an account, test things out, do as you please.    

@@ -2,6 +2,7 @@ import json, urllib.request
 
 API_LINK = "https://api.nomics.com/v1/"
 
+'''grab the api key from the keys/ folder'''
 with open('keys/nomics.json', 'r') as data:
     api_dict = json.load(data)
 
@@ -173,8 +174,6 @@ def list_coins():
     for dict in raw:
         list_of_coins.append(dict['id'])
     return list_of_coins
-
-    
 
 #testing functions
 #All work as intended, unless otherwise stated

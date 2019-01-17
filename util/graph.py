@@ -16,7 +16,9 @@ with open('keys/plotly.json', 'r') as data:
 
 API_KEY = api_dict['API']
 USERNAME = api_dict['username']
-plotly.tools.set_credentials_file(username=USERNAME, api_key=API_KEY)
+
+#plotly requires you to set the credentials using their module
+plotly.tools.set_credentials_file(username = USERNAME, api_key = API_KEY)
 
 '''
 Parameters:
@@ -28,14 +30,12 @@ def gen_candlestick(data, market):
     new_header = ['timestamp', 'low', 'open', 'close', 'high', 'volume', 'num_trades']
     df = pd.read_csv(data)
     df.columns = new_header
-
     '''
     debugging
     print(df)
     print(df.columns)
     print(df.index)
     '''
-
     trace = go.Ohlc(x=df['timestamp'],
                     open=df['open'],
                     high=df['high'],
