@@ -15,7 +15,6 @@ app = Flask(__name__)
 
 app.secret_key = os.urandom(32)
 
-#Dictionary of topics
 goodTopics={'btc_economy':"Bitcoin Economy",
             'btc_tech':"Bitcoin Technology",
             'btc_news':"Bitcoin News",
@@ -30,7 +29,6 @@ goodTopics={'btc_economy':"Bitcoin Economy",
             'gen_tips':"General: Investment Tips"}
 
 
-#returns whether a user is logge in or not :3
 def noUser():
     return 'username' not in session.keys()
 
@@ -48,15 +46,14 @@ def root():
 """login logout"""
 @app.route("/auth", methods=["POST"])
 def authentication():
-    user = request.form['username']
-    password = request.form['password']
-
-    db = sqlite3.connect('data/base.db')
+    user=request.form['username']
+    password=request.form['password']
+    db = sqlite3.connect('./data/base.db')
     c = db.cursor()
     #dbEditor.reset(c)
 
     if dbEditor.check_pass(c,user,password):
-        session['username'] = user
+        session['username']=user
         db.close()
         return redirect('/profile')
 
@@ -85,11 +82,10 @@ def register_auth():
     db = sqlite3.connect('./data/base.db')
     c = db.cursor()
     if not dbEditor.userExists(c,user):
-        password1 = request.form['password1']
+        password1=request.form['password1']
+        password2=request.form['password2']
 
-        password2 = request.form['password2']
-
-        if (password1 == password2):
+        if (password1==password2):
             dbEditor.addUser(c,user,password1)
             db.commit()
             flash('Registration Successful!')
@@ -112,24 +108,24 @@ def load_profile():
     db = sqlite3.connect('./data/base.db')
     c = db.cursor()
     if request.method=='GET':
-        coins = dbEditor.getCoins(c,session['username'])
-        threads = dbEditor.userThreads(c, session['username'])
-        posts = dbEditor.userPosts(c,session['username'])
+
+        coins=dbEditor.getCoins(c,session['username'])
+        threads=dbEditor.userThreads(c, session['username'])
+        posts=dbEditor.userPosts(c,session['username'])
         #threads=[[post, id],[etc]]
 
-        readPosts = dbEditor.getReadNotifs(c,session['username'])
-        readPosts = dbEditor.getReadNotifs(c,session['username'])
+        readPosts =dbEditor.getReadNotifs(c,session['username'])
+        readPosts=dbEditor.getReadNotifs(c,session['username'])
 
         #[[user,post,thread_id, postid]]
-        unreadPosts = dbEditor.getUnreadNotifs(c,session['username'])
+        unreadPosts =dbEditor.getUnreadNotifs(c,session['username'])
         #[[user,post,threadid, postid]]
         db.close()
         return render_template('profile.html', coins=coins, threads=threads, posts=posts,read_posts=readPosts, unread_posts=unreadPosts,user=session['username'])
     else:
-        pid = request.form['pid']
-        tid = request.form['tid']
-
-        if request.form['act'] == 'read':#read value
+        pid=request.form['pid']
+        tid=request.form['tid']
+        if request.form['act']=='read':#read value
             dbEditor.readNotif(c,session['username'],tid,pid)
             db.commit()
             db.close()
@@ -144,36 +140,33 @@ def load_forum():
     db = sqlite3.connect('./data/base.db')
     c = db.cursor()
     topic = request.args.get('topics')
-
     if topic not in goodTopics.keys():
         flash('Oops, this topic is not yet available')
         return redirect('/')
-
-    threads = dbEditor.viewTopic(c, topic)
-
-    #print(threads)
+    threads= dbEditor.viewTopic(c, topic)
+    print (threads)
     #could edit topic to make more English, or display as is, as now is
     #threads=[[id, post,user],[etc]] from specific topic
-
     db.close()
-    englishtopic = goodTopics[topic]
-
+    englishtopic=goodTopics[topic]
     return render_template('forum.html', notLoggedIn=noUser(),topic=englishtopic, idtopic=topic, threads= threads)
 
-@app.route("/mkthr", methods = ['POST'])
+@app.route("/mkthr", methods=['POST'])
 def makeThread():
-    post = request.form["initPost"]
-    topic = request.form["topic"]#will return as rendered in load_forum
+    post=request.form["initPost"]
+    topic=request.form["topic"]#will return as rendered in load_forum
+
 
     if noUser():#allow for not logged-in posting
         flash('Not logged in')
     else:
-        user = session['username']
+        user=session['username']
         db = sqlite3.connect('./data/base.db')
         c = db.cursor()
         dbEditor.newThread(c,post,user,topic)
         db.commit()
         db.close()
+
 
     return redirect('/forum?topics='+topic)
 
@@ -181,7 +174,8 @@ def makeThread():
 """thread"""
 @app.route("/thread", methods=['POST','GET'])
 def load_thread():
-    if request.method == "GET":
+
+    if request.method=="GET":
         threadID = request.args.get('id')#or perhaps name?
         print(threadID)
         db = sqlite3.connect('./data/base.db')
@@ -192,6 +186,7 @@ def load_thread():
             #dummyPostforTesting=[["Math", "how can you calculate bitcoins","tomorrow",-100]]
             db.close()
             return render_template('thread.html', notLoggedIn=noUser(), posts=posts, threadname=posts[0][1], threadID=threadID)
+
         except:
             flash("Thread not Found")
             return redirect('/')
@@ -199,16 +194,16 @@ def load_thread():
     else:
         """Upvote???"""
         #if wants to incorporate this, would need some login requirement, and disable function dependent on user record...
-        info = request.form['upvote'].split(',')
-        postID = info[0]
-        threadID = info[1]
+        info=request.form['upvote'].split(',')
+        postID=info[0]
+        threadID=info[1]
 
         if not noUser():
             db = sqlite3.connect('./data/base.db')
             c = db.cursor()
             dbEditor.votePost(c,threadID, postID,1,session['username'])
             db.commit()
-
+            db.close()
         #function to add upvote
         return redirect('/thread?id='+threadID)
 
@@ -216,37 +211,33 @@ def load_thread():
 @app.route("/addPost", methods=['POST'])
 def addPost():
     """addPosts"""
-    threadid = request.form['id']
-    content = request.form['post']
+    threadid=request.form['id']
+    content=request.form['post']
 
-    """prevents anonymos posting"""
+    """allow for not logged in users to post"""
     if noUser():
         flash("No user")
 
     else:
         user = session['username']
-
         db = sqlite3.connect('./data/base.db')
         c = db.cursor()
         dbEditor.addToThread(c, content, threadid, user)
-
         db.commit()
         db.close()
 
     return redirect('/thread?id='+threadid)
 
-'''Displays any releveant chart data if the user submitted something. Otherwise just tracks the price of BTC, going back a year'''
+
+
 @app.route("/chart", methods=['POST', 'GET'])
 def chart():
+    '''Displays any releveant chart data if the user submitted something. Otherwise just tracks the price of BTC, going back a year'''
     stuff = "<center><h3>BitCoin Price</h3></center>" + graph.BTC_price("2018-01-15")
     graph_title = ''
 
     try:
         stuff += '<center><h5> Either you didn\'t submit something, or the API can\'t find valid data in that date range. Try again!</center></h5>'
-        #checks the method type
-        #POST means its a price graph
-        #GET means it's a exchange/market graph
-
         if request.method == 'POST':
             start = request.form.get('start')
             end = request.form.get('end')
@@ -265,6 +256,7 @@ def chart():
             csv_url = crypto.exchange_candles_csv_url('1d', exchange, market, start, end)
             graph_title = request.args.get('market') + ' price on ' + request.args.get('exchange')
             stuff = graph.gen_candlestick(csv_url, graph_title)
+
         #print(stuff)
         return render_template('charts.html', notLoggedIn=noUser(), stuff = '<center><h3>' + graph_title + '</center></h3>' + stuff)
     except:
@@ -286,14 +278,13 @@ def prices():
         coins = crypto.list_coins()
     except:
         flash("unable to get list of coins")
-        #print('cant get coins!')
+        print('cant get coins!')
         coins=[]
-
     return render_template('prices.html', notLoggedIn=noUser(), coins=coins)
 
-'''Allows the user to pick an exchange, a market on that exchange, and view stats for it'''
 @app.route("/exchanges", methods=['POST', 'GET'])
 def exchanges():
+    '''Allows the user to pick an exchange, a market on that exchange, and view stats for it'''
     exchange = request.args.get('exchange')
 
     if exchange == None:
@@ -302,5 +293,5 @@ def exchanges():
         return render_template('exchange.html', exch_picked=True, markets = crypto.list_markets_available(exchange), exchange_chosen = exchange)
 
 if __name__=="__main__":
-    app.debug = True
+    app.debug=True
     app.run()
