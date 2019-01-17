@@ -87,11 +87,10 @@ def addToThread(cursor,post,threadID,user):
     #THIS ONLY RETURNS THE USER OF THE GENERAL THREAD, NOT PARTICULAR POSTS: IS THIS WHAT WE WANT?
 
     i = list(cursor.execute(v))[0]
-    print(i)
-
-    v = "INSERT INTO " + i[0] + "_notifications VALUES(?,?,?,?,?);"
-    # user, post, threadID, postID, read
-    cursor.execute(v,(user," responded to",threadID,t,0,))
+    for j in i:
+        v = "INSERT INTO " + j + "_notifications VALUES(?,?,?,?,?);"
+        # user, post, threadID, postID, read
+        cursor.execute(v,(user," responded to",threadID,t,0,))
     #cursor.execute(v,(user,'responded to',threadID,t,0,))
     # 0 means unread
     # 1 means read
@@ -129,15 +128,19 @@ def votePost(cursor,threadID,postID,num,user):
      x = list(cursor.execute(g,(postID,)))
     # print(x)
      if (len(x[0][1]) > 0):
-         t = x[0][1].split("!")[:-1]
-         print(t)
+         #print(x[0][1])
+         t = x[0][1].split("!")
+         #print(t)
+         #print(user,t)
+    #     print(user not in t)
          if user not in t:
              ha = x[0][0] + num
+             print(t,user not in t)
              t.append(user)
              s = "!"
-            # print(t)
+             print(t,user not in t)
              s = s.join(t)
-             #print(s,type(s))
+            # print(s)
              cursor.execute(v,(ha,postID))
              cursor.execute(tee,(s,postID))
              if num is -1:
@@ -178,7 +181,9 @@ newThread(c,"bti",user,"be")
 newThread(c,"baa",user2,"ba")
 addToThread(c,"ha",1,user2)
 votePost(c,2,1,1,user2)
+votePost(c,2,1,1,user3)
 votePost(c,2,1,1,user2)
+votePost(c,2,1,1,user3)
 votePost(c,2,1,1,user2)
 print(viewThread(c,2))
 db.commit()
