@@ -232,29 +232,39 @@ def addPost():
 
 @app.route("/chart", methods=['POST', 'GET'])
 def chart():
+    '''Displays any releveant chart data if the user submitted something. Otherwise just tracks the price of BTC, going back a year'''
     stuff = "<center><h3>BitCoin Price</h3></center>" + graph.BTC_price("2018-01-15")
+    graph_title = ''
 
     try:
-        start = request.form['start']
-        end = request.form['end']
-
-        if end == None:
-            print('end == none')
-            stuff = graph.gen_candlestick(crypto.candlestick_csv_url('1d', request.form['coin'], start), request.form['coin'])
-        elif start>end:
-            print('start > end')
-            stuff = graph.gen_candlestick(crypto.candlestick_csv_url('1d', request.form['coin'], start), request.form['coin'])
+        stuff += '<center><h5> Either you didn\'t submit something, or the API can\'t find valid data in that date range. Try again!</center></h5>'
+        if request.method == 'POST':
+            start = request.form.get('start')
+            end = request.form.get('end')
         else:
-            print('else')
-            stuff = graph.gen_candlestick(crypto.candlestick_csv_url('1d', request.form['coin'], start, end), request.form['coin'])
+            start = request.args.get('start')
+            end = request.args.get('end')
 
-        print(stuff)
-        return render_template('charts.html', notLoggedIn=noUser(), stuff=stuff)
+        market = request.args.get('market')
+        exchange = request.args.get('exchange')
+
+        if market == None or exchange == None:
+            csv_url =  crypto.candlestick_csv_url('1d', request.form.ge('coin'), start, end)
+            graph_title = request.form.get('coin') + ' Price'
+            stuff = graph.gen_candlestick(csv_url, request.form.get('coin') + graph_title)
+        else:
+            csv_url = crypto.exchange_candles_csv_url('1d', exchange, market, start, end)
+            graph_title = request.args.get('market') + ' price on ' + request.args.get('exchange')
+            stuff = graph.gen_candlestick(csv_url, graph_title)
+
+        #print(stuff)
+        return render_template('charts.html', notLoggedIn=noUser(), stuff = '<center><h3>' + graph_title + '</center></h3>' + stuff)
     except:
-        return render_template('charts.html', notLoggedIn=noUser(), stuff=stuff)
+        return render_template('charts.html', notLoggedIn=noUser(), stuff = '<center><h3>' + graph_title + '</center></h3>' + stuff)
 
 @app.route("/coins")
 def coins():
+    '''uses the Nomics API dashboard data to bring a dashboard that is updated every 15 seconds'''
     try:
         big_dict=crypto.dashboard()
     except:
@@ -263,6 +273,7 @@ def coins():
 
 @app.route("/prices")
 def prices():
+    '''get's the list of coins for the user to check the price of, and allows them to choose'''
     try:
         coins = crypto.list_coins()
     except:
@@ -273,9 +284,9 @@ def prices():
 
 @app.route("/exchanges", methods=['POST', 'GET'])
 def exchanges():
-    exchange = None
-    if request.method == 'POST':
-        exchange = request.form['exchange']
+    '''Allows the user to pick an exchange, a market on that exchange, and view stats for it'''
+    exchange = request.args.get('exchange')
+
     if exchange == None:
         return render_template('exchange.html', exch_picked=False, exchanges = crypto.list_exchanges())
     else:
