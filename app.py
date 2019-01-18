@@ -249,7 +249,7 @@ def chart():
         exchange = request.args.get('exchange')
 
         if market == None or exchange == None:
-            csv_url =  crypto.candlestick_csv_url('1d', request.form.ge('coin'), start, end)
+            csv_url =  crypto.candlestick_csv_url('1d', request.form.get('coin'), start, end)
             graph_title = request.form.get('coin') + ' Price'
             stuff = graph.gen_candlestick(csv_url, request.form.get('coin') + graph_title)
         else:

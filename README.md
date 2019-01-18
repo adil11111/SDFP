@@ -79,3 +79,9 @@ The link points to localhost:5000, which is the server on which the program is r
 If you encounter any issues worth noting, open an issue so we can get to it!   
    
 Hope you enjoy :blush:  
+
+
+KNOWN BUGS/ISSUES:   
+- API   
+	- Nomics API provides faulty data for some dates, making the graph appearing messed up    
+	- Plotly only allows 25 graphs per user on the free plan, so one must log in and clear up plots if they have been all used up    

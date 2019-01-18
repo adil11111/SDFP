@@ -187,7 +187,6 @@ def readNotif(cursor,user,threadID,postID):
     # trigger refresh of page with notif gone to read
     v = "UPDATE " + user + "_notifications SET read = ? WHERE threadID = ? AND postID = ?;"
     cursor.execute(v,(1,threadID,postID,)) # turns this read
-
 '''
 db = sqlite3.connect('data/base.db')
 c = db.cursor()
