@@ -100,9 +100,9 @@
 	      <!-- read_posts=[[user,post,thread_id, post_id]]-->
 	      {% for post in read_posts %}
 	      <tr><td>
-		  <form action="#" method="POST">
-		    <input type="hidden" name="tid" value={{post[3]}}>
-		    <input type="hidden" name="pid" value={{post[2]}}>
+		  <form action="/profile" method="POST">
+		    <input type="hidden" name="tid" value={{post[2]}}>
+		    <input type="hidden" name="pid" value={{post[3]}}>
 		    <input type="submit" class="button"  name="act" value="{{post[0]}}:{{post[1]}}" >
 		  </form>
 
