@@ -203,4 +203,10 @@ qianZ -- 2019-01-16 17:29
 peciR -- 2018-01-16 19:30
 --------------------------------------------------------------
 - More bugfixes and stress-testing :3
-- Add try/except blocks  
+- Add try/except blocks
+
+gondalA -- 2018-01-16 21:00
+--------------------------------------------------------------
+- Update design doc to reflect current state of project
+- Added dashboard to site map
+- Database Schema has notifications table
