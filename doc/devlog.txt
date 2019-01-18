@@ -210,3 +210,8 @@ gondalA -- 2018-01-16 21:00
 - Update design doc to reflect current state of project
 - Added dashboard to site map
 - Database Schema has notifications table
+
+gondalA -- 2018-01-17 06:30
+--------------------------------------------------------------
+- Make and upload video demo
+- Update README.md to link to video
