@@ -16,7 +16,7 @@ Users will be able to create accounts to comment on threads relating to all of t
 - Posts can be upvoted, saved, and replied to. 
 - Stats regarding various crytocurrencies can be viewed, and some coins can be favorited. 
 
-[our video demo here](https://www.youtube.com/)
+[our video demo here](https://youtu.be/fju5beBFGkU)
 
 ### Necessary Packages
 1. Datetime   
