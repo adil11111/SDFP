@@ -199,3 +199,8 @@ narangA -- 2019-01-16 12:31
 qianZ -- 2019-01-16 17:29
 --------------------------------------------------------------
 - started to try out css for thread as instructed by Defense.
+
+peciR -- 2018-01-16 11:25
+--------------------------------------------------------------
+- More bugfixes and stress-testing :3
+- Add try/except blocks  
